@@ -24,3 +24,25 @@ and then run
 
 Start coding
 
+## TODOS 
+
+### Optimisations 
+
+* Any optimization idea is welcomed, every single frame gained is a huge win
+
+### Level
+
+* Add enemies, wave of T.I.E Fighter enemies they can appear in front, chase us and shoot us
+* Add immobile blocs, Rigid Body obstacles to avoid while running the trench, there can be moving one as well, the main inspiration is the Trench from Rogue Squadron II Rogue Leader
+* Improve the enemies functionning
+
+### Visuals/Effects
+
+* Add efficient particle system for Explosion, I couldn't find out one for myself yet
+* Better effect when firing
+* Effect when we get hit, I would like it to be flashy.
+* Any quality improvement is welcomed
+
+### Have fun
+
+* Have fun trying ideas, playing with the code, I will accept some ideas !
