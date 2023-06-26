@@ -54,7 +54,7 @@ export const Experience = () => {
       {/* <OrbitControls/> */}
       <Environment preset="night" />
 
-      {/* <Composer /> */}
+      <Composer />
     </>
   );
 };
@@ -132,7 +132,7 @@ function Composer() {
       {/* <LUT lut={texture} /> */}
       <BrightnessContrast brightness={0} contrast={0.1} />
       <HueSaturation hue={0} saturation={-0.25} />
-      {/* <SMAA /> */}
+      <SMAA />
       {/* <SSR {...all}/> */}
     </EffectComposer>
   );
