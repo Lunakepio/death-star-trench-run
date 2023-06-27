@@ -5,6 +5,7 @@ import './index.css'
 
 const initialContext = {
     gameStarted: false,
+    setGameStarted: () => {},
 }
 
 const GameContext = createContext(initialContext);
