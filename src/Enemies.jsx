@@ -121,7 +121,7 @@ export const Enemies = () => {
         } else {
           ref.current.position.x = wingPosition.x;
           ref.current.position.y = wingPosition.y;
-          if (shotsFired.current == 3) {
+          if (shotsFired.current === 3) {
             if (currentTime - lastShotTime.current > 3) {
               shotsFired.current = 0;
             }
