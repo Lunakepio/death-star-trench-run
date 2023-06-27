@@ -40,7 +40,6 @@ export const Projectile = ({ position, rotation, forwardVector, enemy }) => {
           }}
         >
           <mesh ref={meshRef} raycast={(e) => {
-            console.log(e);
           }}>
             <boxGeometry args={[0.05, 0.05, 2]} ref={geometryRef} />
             <meshPhongMaterial
