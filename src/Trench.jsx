@@ -147,7 +147,7 @@ function Turret({ position, materials, nodes }) {
     const wingsPosition = camera.position.clone();
     mesh.current = cannons.current.clone()
 
-    wingsPosition.z += 20;
+    wingsPosition.z += 5;
     head.current.lookAt(wingsPosition);
     head.current.rotation.x = 0;
     head.current.rotation.z = 0;
