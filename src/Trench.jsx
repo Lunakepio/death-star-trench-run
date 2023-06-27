@@ -8,6 +8,7 @@ import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { Projectile } from "./Projectile";
+import { RigidBody } from "@react-three/rapier";
 import gsap from "gsap";
 
 function handleMouse(pos, ref, ringOne, ringTwo, shotsFired, setProjectiles, light) {
@@ -138,12 +139,14 @@ function Turret({ position, materials, nodes }) {
   const lightTwo = useRef();
   const [projectiles, setProjectiles] = useState([]);
   const mesh = useRef();
+  const offsetY = position[1] * -1 - 4; 
 
 
   useFrame(({ clock, camera }) => {
     const currentTime = clock.getElapsedTime();
     const distance = ref.current.position.distanceTo(camera.position);
-
+    if(distance < 50) {
+      mousePressed.current = true;
     const wingsPosition = camera.position.clone();
     mesh.current = cannons.current.clone()
 
@@ -192,11 +195,20 @@ function Turret({ position, materials, nodes }) {
       shotsFired.current += 1;
     }
     mesh.current.visible = false;
-  });
+  } else {
+    mousePressed.current = false;
+  }
+});
 
   return (
     <>
     <group ref={ref} rotation-y={Math.PI} position={position}>
+    <RigidBody type="fixed" position-y={offsetY}>
+        <mesh>
+          <boxGeometry args={[1.5, 4, 0.5]} />
+          <meshBasicMaterial color="red" />
+        </mesh>
+      </RigidBody>
       <mesh
         name="Body"
         geometry={nodes.Body.geometry}

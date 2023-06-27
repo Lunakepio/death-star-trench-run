@@ -33,8 +33,8 @@ export const Experience = () => {
   const { gameStarted, setGameStarted } = useContext(GameContext);
   return (
     <>
-      {/* <directionalLight position-y={100} intensity={0.5} /> */}
-      <ambientLight intensity={0.2} />
+      <directionalLight position-y={100} intensity={0.1} />
+      {/* <ambientLight intensity={0.2} /> */}
       <fog attach="fog" args={["#1b2e43",80, 100]} color={[0.0015,0.0015,0.0025]}/>
       <Stars
         radius={1000}
@@ -73,7 +73,7 @@ function World() {
       {/* <Trench /> */}
       <TrenchTurret />
 
-      {/* <RigidBody type="fixed" name="floor" position={[4.2, -2.5,position]}>
+       <RigidBody type="fixed" name="floor" position={[4.2, -2.5,position]}>
         <mesh>
           <boxGeometry args={[1, 10, 4000]} />
           <meshBasicMaterial color="red" visible={visible} />
@@ -90,7 +90,7 @@ function World() {
           <boxGeometry args={[10, 10, 4000]} />
           <meshBasicMaterial color="blue" visible={visible} />
         </mesh>
-      </RigidBody> */}
+      </RigidBody> 
     </group>
   );
 }
