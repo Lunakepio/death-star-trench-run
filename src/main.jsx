@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 
+const initialContext = {
+    gameStarted: false,
+}
 
-const GameContext = createContext();
+const GameContext = createContext(initialContext);
 
 const GameProvider = ({ children }) => {
   const [gameStarted, setGameStarted] = useState(true);
@@ -18,7 +21,10 @@ const GameProvider = ({ children }) => {
     </GameContext.Provider>
   )
 }
-ReactDOM.createRoot(document.getElementById('root')).render(
+
+const container = document.getElementById('root')
+
+ReactDOM.createRoot(container).render(
   <GameProvider>
     <App />
   </GameProvider>
