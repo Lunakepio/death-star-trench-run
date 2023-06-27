@@ -7,19 +7,21 @@ Current state of the project can be seen here : https://death-star-trench-run.ve
 
 ## 🟥 ANNOUNCING 🟥 
 
-The project is going open source so you can contribute as well, there will be a credit scene at the end of the game just like in a Star Wars movie, you'll be credited as well.
+The project is going open source, so you can contribute as well, there will be a credit scene at the end of the game just like in a Star Wars movie, you'll be credited as well.
 
 ## Setup
 
-The project is running on a Vite.js server with @React-three/fiber, @React-three/drei and @React-three/Rapier physic engine 
-## Installing
-Once you downloaded the project run 
-``npm install ``
+The project is running on a Vite.js server with @React-three/fiber, @React-three/drei and @React-three/Rapier physic engine
 
-and then run 
+You should have Node.js, pnpm and git on your computer to be able to run the project
 
-``npm run dev``
+## Getting started
+Once you cloned the project from GitHub, install the dependencies and run the project with the following commands:
 
+```bash
+pnpm install
+pnpm run dev
+```
 ## Code 
 
 Start coding
@@ -34,7 +36,7 @@ Start coding
 
 * Add enemies, wave of T.I.E Fighter enemies they can appear in front, chase us and shoot us
 * Add immobile blocs, Rigid Body obstacles to avoid while running the trench, there can be moving one as well, the main inspiration is the Trench from Rogue Squadron II Rogue Leader
-* Improve the enemies functionning
+* Improve the enemies functioning
 
 ### Visuals/Effects
 
