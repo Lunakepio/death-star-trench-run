@@ -38,8 +38,8 @@ function App() {
         gl={{
           powerPreference: "low-power",
           antialias: false,
-          stencil: false,
-          depth: false,
+          // stencil: false,
+          // depth: false,
         }}
       >
         <color attach="background" args={[0.0015,0.0015,0.0025]} />

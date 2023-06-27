@@ -194,7 +194,6 @@ export const Enemies = () => {
             }
             if (health.current <= 0) {
               alive.current = false;
-              console.log(alive.current)
             }
           }}
         >

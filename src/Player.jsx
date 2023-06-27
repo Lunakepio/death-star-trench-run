@@ -102,7 +102,6 @@ function handleMouse(
 
     animateShoot(ringFour, lightFour);
   }
-  console.log(ref.quaternion);
 
   const forwardVector = new THREE.Vector3(0, 0, 1).applyQuaternion(
     projectileQuaternion
@@ -136,7 +135,7 @@ export const Player = () => {
   const audio = useRef();
   const health = useRef(100);
   const [projectiles, setProjectiles] = React.useState([]);
-  const wingsOpen = useRef(false);
+  const wingsOpen = useRef(true);
   const shotsFired = useRef(0);
   const [alive, setAlive] = React.useState(true);
   const { gameStarted, setGameStarted } = useContext(GameContext);
@@ -145,7 +144,7 @@ export const Player = () => {
   const [bodyRotation, setBodyRotation] = React.useState([0, 0, 0]);
 
   const speed = useRef(0.2);
-  const [cameraDistance, setCameraDistance] = React.useState(-7);
+  const [cameraDistance, setCameraDistance] = React.useState(-6);
   const mousePressed = useRef(false);
 
   const upPressed = useKeyboardControls((state) => state[Controls.up]);
