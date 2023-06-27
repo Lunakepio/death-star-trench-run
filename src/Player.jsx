@@ -138,8 +138,25 @@ export const Player = () => {
   const [projectiles, setProjectiles] = React.useState([]);
   const wingsOpen = useRef(false);
   const shotsFired = useRef(0);
+
   const [alive, setAlive] = React.useState(true);
-  const { gameStarted, setGameStarted } = useContext(GameContext);
+  const { gameStarted, setGameStarted, gameStopped, restartGame } = useContext(GameContext);
+   const handleCharacterStop = () => {
+    setGameStarted(false);
+    restartGame();
+  };
+
+  return (
+    <div>
+      {gameStarted && (
+        <button onClick={handleCharacterStop}>Stop</button>
+      )}
+      {gameStopped && (
+        <button onClick={restartGame}>Restart</button>
+      )}
+    </div>
+  );
+  
   let distance = 5;
   const [bodyPosition, setBodyPosition] = React.useState([0, 0, 0]);
   const [bodyRotation, setBodyRotation] = React.useState([0, 0, 0]);

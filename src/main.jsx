@@ -6,18 +6,25 @@ import './index.css'
 const initialContext = {
     gameStarted: false,
     setGameStarted: () => {},
+    gameStopped: false,
 }
 
 const GameContext = createContext(initialContext);
 
 const GameProvider = ({ children }) => {
+  const [gameStopped, setGameStopped] = useState(false);
   const [gameStarted, setGameStarted] = useState(true);
   const [graphicsQuality, setGraphicsQuality] = useState(1);
   const [mouseControls, setMouseControls] = useState(false);
   const [projectiles, setProjectiles] = useState([]);
 
+  const restartGame = () => {
+  setGameStarted(true);
+  setGameStopped(false);
+    };
+
   return(
-    <GameContext.Provider value={{ gameStarted, setGameStarted, graphicsQuality, setGraphicsQuality, mouseControls, setMouseControls, projectiles, setProjectiles }}>
+    <GameContext.Provider value={{ gameStarted, setGameStarted, graphicsQuality, setGraphicsQuality, mouseControls, setMouseControls, projectiles, setProjectiles, gameStopped, restartGame }}>
       {children}
     </GameContext.Provider>
   )
