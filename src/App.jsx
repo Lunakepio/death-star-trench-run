@@ -44,7 +44,7 @@ function App() {
       >
         <color attach="background" args={[0.0015,0.0015,0.0025]} />
         <Suspense>
-          <Physics debug gravity={[0, 0, 0]}>
+          <Physics gravity={[0, 0, 0]}>
             <KeyboardControls map={map}>
               <Experience />
             </KeyboardControls>
