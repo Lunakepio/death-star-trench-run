@@ -204,9 +204,8 @@ function Turret({ position, materials, nodes }) {
     <>
     <group ref={ref} rotation-y={Math.PI} position={position}>
     <RigidBody type="fixed" position-y={offsetY}>
-        <mesh>
+        <mesh visible={false}>
           <boxGeometry args={[1.5, 4, 0.5]} />
-          <meshBasicMaterial color="red" />
         </mesh>
       </RigidBody>
       <mesh
