@@ -7,7 +7,6 @@ import { Ship } from './Ship.jsx'
 import * as THREE from 'three'
 import { CameraShake } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
-import { useControls } from 'leva'
 import { useEffect } from 'react'
 import { Particles } from './HyperSpace';
 import { GameContext } from './main'
