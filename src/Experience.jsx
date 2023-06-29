@@ -94,7 +94,7 @@ function World() {
     </group>
   );
 }
-function Composer() {
+export const Composer = () => {
   const texture = useLoader(LUTCubeLoader, "/F-6800-STD.cube");
   const all = {
     enabled: true,
@@ -132,7 +132,7 @@ function Composer() {
   return (
     <EffectComposer multisampling={0} disableGamma disableNormalPass>
       <Bloom luminanceThreshold={1} intensity={2} levels={9} mipmapBlur />
-      {/* <LUT lut={texture} /> */}
+      <LUT lut={texture} />
       <BrightnessContrast brightness={0} contrast={0.1} />
       <HueSaturation hue={0} saturation={-0.25} />
       <SMAA />

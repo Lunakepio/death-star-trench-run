@@ -12,12 +12,18 @@ const GameContext = createContext(initialContext);
 
 const GameProvider = ({ children }) => {
   const [gameStarted, setGameStarted] = useState(true);
-  const [graphicsQuality, setGraphicsQuality] = useState(1);
-  const [mouseControls, setMouseControls] = useState(false);
-  const [projectiles, setProjectiles] = useState([]);
+
+  const [setup, setSetup] = useState({
+    mouse: false,
+    invertLook: false,
+    graphics: "medium",
+    sound: "on",
+  });
+
+  const [status, setStatus] = useState("");
 
   return(
-    <GameContext.Provider value={{ gameStarted, setGameStarted, graphicsQuality, setGraphicsQuality, mouseControls, setMouseControls, projectiles, setProjectiles }}>
+    <GameContext.Provider value={{ gameStarted, setGameStarted, setup, setSetup, status, setStatus }}>
       {children}
     </GameContext.Provider>
   )

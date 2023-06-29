@@ -71,8 +71,8 @@ function handleMouse(
   const projectilePosition = ref.position.clone();
   const projectileRotation = ref.rotation.clone();
   projectilePosition.z += 2;
-  const angleA = Math.atan(1 / distance);
-  const angleB = Math.atan(0.33 / distance);
+  const angleA = Math.atan2(1, distance);
+  const angleB = Math.atan2(0.33, distance);
   const projectileQuaternion = ref.quaternion.clone();
 
   if (shotsFired === 0) {
@@ -138,7 +138,7 @@ export const Player = () => {
   const wingsOpen = useRef(true);
   const shotsFired = useRef(0);
   const [alive, setAlive] = React.useState(true);
-  const { gameStarted, setGameStarted } = useContext(GameContext);
+  const { gameStarted, setGameStarted, setup } = useContext(GameContext);
   let distance = 5;
   const [bodyPosition, setBodyPosition] = React.useState([0, 0, 0]);
   const [bodyRotation, setBodyRotation] = React.useState([0, 0, 0]);
@@ -198,13 +198,20 @@ export const Player = () => {
         }
 
         boxRef.current.rotation.set(0, 0, 0);
-        // boxRef.current.position.x = -mouse.x * viewport.width * 0.1;
-        // boxRef.current.position.y = mouse.y * viewport.height * 0.1;
-
+       if(setup.mouse){
+        boxRef.current.position.x = -mouse.x * viewport.width * 0.1;
+        boxRef.current.position.y = setup.invertLook ? mouse.y * viewport.height * 0.1 : -mouse.y * viewport.height * 0.1;
+       } else {
         boxRef.current.position.x += leftPressed ? boxSpeed : 0;
         boxRef.current.position.x += rightPressed ? -boxSpeed : 0;
-        boxRef.current.position.y += upPressed ? boxSpeed : 0;
-        boxRef.current.position.y += downPressed ? -boxSpeed : 0;
+        if(setup.invertLook){
+          boxRef.current.position.y += upPressed ? -boxSpeed : 0;
+          boxRef.current.position.y += downPressed ? boxSpeed : 0;
+        } else {
+          boxRef.current.position.y += upPressed ? boxSpeed : 0;
+          boxRef.current.position.y += downPressed ? -boxSpeed : 0;
+        }
+       }
 
         const boxPosition = new THREE.Vector3();
         boxPosition.setFromMatrixPosition(boxRef.current.matrixWorld);
