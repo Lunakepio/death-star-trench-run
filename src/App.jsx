@@ -1,9 +1,19 @@
-import { Suspense, useMemo, useState } from "react";
+import { Suspense, useMemo, useState, useContext } from "react";
 
 import { Canvas } from "@react-three/fiber";
 import { Experience } from "./Experience";
 import { Physics } from "@react-three/rapier";
-import { KeyboardControls, Loader, Preload, Stats } from "@react-three/drei";
+import {
+  KeyboardControls,
+  Loader,
+  OrbitControls,
+  Preload,
+} from "@react-three/drei";
+import { Web } from "./Web";
+import "./globals.scss";
+import { Landing } from "./Landing";
+import { GameContext } from "./main";
+import { LoadingScreen } from "./LoadingScreen";
 import { XR, XRButton } from "@react-three/xr";
 
 export const Controls = {
@@ -17,6 +27,18 @@ export const Controls = {
 };
 
 function App() {
+  const [count, setCount] = useState(0);
+  const { status, setStatus } = useContext(GameContext);
+
+  return (
+    <div className='' style={{ width: "100vw", height: "100vh" }}>
+      {status !== "done" ? <Landing /> : <Game />}
+      <LoadingScreen />
+    </div>
+  );
+}
+
+function Game() {
   const map = useMemo(
     () => [
       { name: Controls.up, keys: ["KeyW", "ArrowUp"] },
@@ -29,9 +51,8 @@ function App() {
     ],
     []
   );
-
   return (
-    <div className='' style={{ width: "100vw", height: "100vh" }}>
+    <>
       <Canvas
         dpr={[1, 1]}
         gl={{
@@ -41,16 +62,15 @@ function App() {
           depth: false,
         }}
       >
+        <color attach='background' args={[0.0015, 0.0015, 0.0025]} />
         <XR>
-          <color attach='background' args={[0.0015, 0.0015, 0.0025]} />
           <Suspense>
             <Physics gravity={[0, 0, 0]}>
               <KeyboardControls map={map}>
                 <Experience />
               </KeyboardControls>
             </Physics>
-            <Stats />
-            <Preload all />
+            {/* <Preload all /> */}
           </Suspense>
         </XR>
       </Canvas>
@@ -63,8 +83,7 @@ function App() {
         }}
         mode={"VR"}
       />
-      <Loader />
-    </div>
+    </>
   );
 }
 

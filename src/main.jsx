@@ -3,22 +3,35 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 
+const initialContext = {
+    gameStarted: false,
+    setGameStarted: () => {},
+}
 
-const GameContext = createContext();
+const GameContext = createContext(initialContext);
 
 const GameProvider = ({ children }) => {
   const [gameStarted, setGameStarted] = useState(true);
-  const [graphicsQuality, setGraphicsQuality] = useState(1);
-  const [mouseControls, setMouseControls] = useState(false);
-  const [projectiles, setProjectiles] = useState([]);
+
+  const [setup, setSetup] = useState({
+    mouse: false,
+    invertLook: false,
+    graphics: 1,
+    sound: true,
+  });
+
+  const [status, setStatus] = useState("");
 
   return(
-    <GameContext.Provider value={{ gameStarted, setGameStarted, graphicsQuality, setGraphicsQuality, mouseControls, setMouseControls, projectiles, setProjectiles }}>
+    <GameContext.Provider value={{ gameStarted, setGameStarted, setup, setSetup, status, setStatus }}>
       {children}
     </GameContext.Provider>
   )
 }
-ReactDOM.createRoot(document.getElementById('root')).render(
+
+const container = document.getElementById('root')
+
+ReactDOM.createRoot(container).render(
   <GameProvider>
     <App />
   </GameProvider>

@@ -16,15 +16,17 @@
     "@react-three/xr": "^5.5.0",
     "gsap": "^3.12.1",
     "lamina": "^1.1.23",
+    "postprocessing": "^6.32.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "sass": "^1.63.6",
     "three": "^0.153.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
-    "@vitejs/plugin-react": "^3.1.0",
-    "vite": "^4.2.0",
+    "@vitejs/plugin-react-swc": "^3.2.0",
+    "vite": "^4.3.9",
     "vite-plugin-mkcert": "^1.15.0"
   }
 }

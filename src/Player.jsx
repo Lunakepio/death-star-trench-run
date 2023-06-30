@@ -70,31 +70,31 @@ function handleMouse(
   const distance = 400;
   const projectilePosition = ref.position.clone();
   const projectileRotation = ref.rotation.clone();
-  projectilePosition.z += 2;
-  const angleA = Math.atan(1 / distance);
-  const angleB = Math.atan(0.33 / distance);
+  projectilePosition.z += 1;
+  const angleA = Math.atan2(1, distance);
+  const angleB = Math.atan2(0.33, distance);
   const projectileQuaternion = ref.quaternion.clone();
 
-  if (shotsFired == 0) {
+  if (shotsFired === 0) {
     projectilePosition.x = projectilePosition.x + 1;
     projectilePosition.y = projectilePosition.y + 0.33;
     projectileQuaternion.y -= angleA;
     projectileQuaternion.x += angleB;
 
     animateShoot(ringOne, lightOne);
-  } else if (shotsFired == 1) {
+  } else if (shotsFired === 1) {
     projectilePosition.x = projectilePosition.x - 1;
     projectilePosition.y = projectilePosition.y - 0.33;
     projectileQuaternion.y += angleA;
     projectileQuaternion.x -= angleB;
     animateShoot(ringTwo, lightTwo);
-  } else if (shotsFired == 2) {
+  } else if (shotsFired === 2) {
     projectilePosition.x = projectilePosition.x + 1;
     projectilePosition.y = projectilePosition.y - 0.33;
     projectileQuaternion.y -= angleA;
     projectileQuaternion.x -= angleB;
     animateShoot(ringThree, lightThree);
-  } else if (shotsFired == 3) {
+  } else if (shotsFired === 3) {
     projectilePosition.x = projectilePosition.x - 1;
     projectilePosition.y = projectilePosition.y + 0.33;
     projectileQuaternion.y += angleA;
@@ -102,7 +102,6 @@ function handleMouse(
 
     animateShoot(ringFour, lightFour);
   }
-  console.log(ref.quaternion);
 
   const forwardVector = new THREE.Vector3(0, 0, 1).applyQuaternion(
     projectileQuaternion
@@ -136,16 +135,16 @@ export const Player = () => {
   const audio = useRef();
   const health = useRef(100);
   const [projectiles, setProjectiles] = React.useState([]);
-  const wingsOpen = useRef(false);
+  const wingsOpen = useRef(true);
   const shotsFired = useRef(0);
   const [alive, setAlive] = React.useState(true);
-  const { gameStarted, setGameStarted } = useContext(GameContext);
+  const { gameStarted, setGameStarted, setup } = useContext(GameContext);
   let distance = 5;
   const [bodyPosition, setBodyPosition] = React.useState([0, 0, 0]);
   const [bodyRotation, setBodyRotation] = React.useState([0, 0, 0]);
 
   const speed = useRef(0.2);
-  const [cameraDistance, setCameraDistance] = React.useState(-7);
+  const [cameraDistance, setCameraDistance] = React.useState(-6);
   const mousePressed = useRef(false);
 
   const upPressed = useKeyboardControls((state) => state[Controls.up]);
@@ -199,13 +198,20 @@ export const Player = () => {
         }
 
         boxRef.current.rotation.set(0, 0, 0);
-        // boxRef.current.position.x = -mouse.x * viewport.width * 0.1;
-        // boxRef.current.position.y = mouse.y * viewport.height * 0.1;
-
+       if(setup.mouse){
+        boxRef.current.position.x = -mouse.x * viewport.width * 0.1;
+        boxRef.current.position.y = setup.invertLook ? mouse.y * viewport.height * 0.1 : -mouse.y * viewport.height * 0.1;
+       } else {
         boxRef.current.position.x += leftPressed ? boxSpeed : 0;
         boxRef.current.position.x += rightPressed ? -boxSpeed : 0;
-        boxRef.current.position.y += upPressed ? boxSpeed : 0;
-        boxRef.current.position.y += downPressed ? -boxSpeed : 0;
+        if(setup.invertLook){
+          boxRef.current.position.y += upPressed ? -boxSpeed : 0;
+          boxRef.current.position.y += downPressed ? boxSpeed : 0;
+        } else {
+          boxRef.current.position.y += upPressed ? boxSpeed : 0;
+          boxRef.current.position.y += downPressed ? -boxSpeed : 0;
+        }
+       }
 
         const boxPosition = new THREE.Vector3();
         boxPosition.setFromMatrixPosition(boxRef.current.matrixWorld);
@@ -223,15 +229,15 @@ export const Player = () => {
           angle
         );
 
-        if (ref.current.position.x != boxPosition.x) {
+        if (ref.current.position.x !== boxPosition.x) {
           ref.current.position.x +=
             ((boxPosition.x - ref.current.position.x) / 10) * 0.3;
         }
-        if (ref.current.position.y != boxPosition.y) {
+        if (ref.current.position.y !== boxPosition.y) {
           ref.current.position.y +=
             ((boxPosition.y - ref.current.position.y) / 10) * 0.3;
         }
-        if (ref.current.position.z != boxPosition.z) {
+        if (ref.current.position.z !== boxPosition.z) {
           ref.current.position.z +=
             ((boxPosition.z - ref.current.position.z) / 10) * speed.current;
         }
@@ -277,7 +283,7 @@ export const Player = () => {
           );
           lastShotTime.current = currentTime;
           shotsFired.current += 1;
-          if (shotsFired.current == 4) {
+          if (shotsFired.current === 4) {
             shotsFired.current = 0;
           }
         }
@@ -315,7 +321,7 @@ export const Player = () => {
     //   setGameStarted(true);
     // }, 110000);
     const handleKeyPress = (event) => {
-      if (event.code === "Space" && wingsOpen.current != wingsTarget.current) {
+      if (event.code === "Space" && wingsOpen.current !== wingsTarget.current) {
         wingsOpen.current = wingsTarget.current;
       }
     };
@@ -370,7 +376,7 @@ export const Player = () => {
           position={bodyPosition}
           rotation={bodyRotation}
           onCollisionEnter={(e) => {
-            if (e.colliderObject.name == "floor") {
+            if (e.colliderObject.name === "floor") {
               health.current -= 100;
             }
           }}

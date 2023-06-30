@@ -7,11 +7,13 @@ Source: https://sketchfab.com/3d-models/tie-5bcaa60ed5ce4a51b4233aed418f2280
 Title: TIE
 */
 
-import React, { useRef } from 'react'
+import React, { useRef, useContext } from 'react'
 import { useGLTF, PositionalAudio } from '@react-three/drei'
+import { GameContext } from './main'
 
 export function Tie(props) {
   const { nodes, materials } = useGLTF('/tie-transformed.glb')
+  const { setup } = useContext(GameContext)
   return (
     <group {...props} dispose={null}>
       <mesh castShadow receiveShadow position-y={-7} geometry={nodes.Object_2.geometry} material={materials.surfaceShader1SG} rotation={[-Math.PI / 2, 0, 0]} />
@@ -19,8 +21,7 @@ export function Tie(props) {
           url="/sounds/tieEngine.wav"
           distance={5}
           loop={true}
-          autoplay={true}
-
+          autoplay={setup.sound}
         />
     </group>
   )

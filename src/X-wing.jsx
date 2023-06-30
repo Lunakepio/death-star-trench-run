@@ -47,13 +47,13 @@ export function Xwing({ wingsOpen }) {
   const engine = useRef();
   const { nodes, materials, animations } = useGLTF("/x-wing-transformed.glb");
   const { actions } = useAnimations(animations, group);
-  const { gameStarted, setGameStarted } = useContext(GameContext);
+  const { gameStarted, setGameStarted, setup } = useContext(GameContext);
   function openWings() {
     gsap.to(refOne.current.rotation, { y: -0.22, duration: 1 });
     gsap.to(refTwo.current.rotation, { y: 0.22, duration: 1 });
     gsap.set(trailValues.current, { decay: 0, delay: 0 });
     wingsOpenSound.current.setVolume(0.3);
-    wingsOpenSound.current.play();
+    setup.sound && wingsOpenSound.current.play();
     gsap.to(materials.Light, { emissiveIntensity: 8, duration: 2 });
   }
 
@@ -63,15 +63,15 @@ export function Xwing({ wingsOpen }) {
     gsap.set(trailValues.current, { decay: 1, delay: 1 });
     gsap.to(materials.Light, { emissiveIntensity: 12, duration: 2 });
     wingsCloseSound.current.setVolume(0.3);
-    wingsCloseSound.current.play();
+    setup.sound && wingsCloseSound.current.play();
   }
 
   useEffect(() => {
     materials.Light.toneMapped = false;
     // materials.Light.emissive = new THREE.Color(0xff7aba);
-    engine.current.setVolume(0.1);
+    engine.current.setVolume(0.2);
     if (gameStarted) {
-      engine.current.play();
+      setup.sound && engine.current.play();
     }
     if (wingsOpen.current) {
       openWings();

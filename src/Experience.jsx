@@ -17,6 +17,9 @@ import {
   SSR,
   SMAA,
   SSAO,
+  N8AO,
+  GodRays,
+  Noise,
 } from "@react-three/postprocessing";
 import { BlendFunction, LUTCubeLoader } from "postprocessing";
 import { useLoader, useFrame } from "@react-three/fiber";
@@ -26,14 +29,15 @@ import { Opening } from "./Opening";
 import { GameContext } from "./main";
 import { useContext, useRef, useState } from "react";
 import { Enemies } from "./Enemies";
+import { TrenchTurret } from "./Trench";
 
 export const Experience = () => {
   const finalValue = 500.5020;
-  const { gameStarted, setGameStarted } = useContext(GameContext);
+  const { gameStarted, setGameStarted, setup } = useContext(GameContext);
   return (
     <>
       <directionalLight position-y={100} intensity={0.1} />
-      {/* <ambientLight intensity={1} /> */}
+      {/* <ambientLight intensity={0.2} /> */}
       <fog attach="fog" args={["#1b2e43",80, 100]} color={[0.0015,0.0015,0.0025]}/>
       <Stars
         radius={1000}
@@ -46,15 +50,16 @@ export const Experience = () => {
       <group position={[0,60,-20]}>
       {/* <Opening /> */}
       </group>
-      <Enemies />
+      {/* <Enemies /> */}
 
-      <World />
-      <Player /> 
+      <World setup={setup}/>
+      <Player setup={setup} /> 
+      {/* <OrbitControls /> */}
       {/* <SoftShadows /> */}
       {/* <OrbitControls/> */}
       <Environment preset="night" />
 
-      <Composer />
+      <Composer setup={setup} />
     </>
   );
 };
@@ -68,9 +73,10 @@ function World() {
 
   return (
     <group>
-      <Trench />
+      {/* <Trench /> */}
+      <TrenchTurret />
 
-      <RigidBody type="fixed" name="floor" position={[4.2, -2.5,position]}>
+       <RigidBody type="fixed" name="floor" position={[4.2, -2.5,position]}>
         <mesh>
           <boxGeometry args={[1, 10, 4000]} />
           <meshBasicMaterial color="red" visible={visible} />
@@ -87,11 +93,13 @@ function World() {
           <boxGeometry args={[10, 10, 4000]} />
           <meshBasicMaterial color="blue" visible={visible} />
         </mesh>
-      </RigidBody>
+      </RigidBody> 
     </group>
   );
 }
-function Composer() {
+export const Composer = () => {
+  const { gameStarted, setGameStarted, setup } = useContext(GameContext);
+
   const texture = useLoader(LUTCubeLoader, "/F-6800-STD.cube");
   const all = {
     enabled: true,
@@ -126,14 +134,23 @@ function Composer() {
     ior: 1.45
   };
 
+  const graphics = setup.graphics;
+
+  const multisamplingValues = [0, 0, 8];
+
   return (
-    <EffectComposer multisampling={0} disableGamma disableNormalPass>
+    <EffectComposer multisampling={multisamplingValues[graphics]} disableGamma disableNormalPass>
       <Bloom luminanceThreshold={1} intensity={2} levels={9} mipmapBlur />
-      {/* <LUT lut={texture} /> */}
+      <LUT lut={texture} />
       <BrightnessContrast brightness={0} contrast={0.1} />
       <HueSaturation hue={0} saturation={-0.25} />
-      <SMAA />
-      {/* <SSR {...all}/> */}
+      {graphics === 2 ? (
+        <>
+        <SMAA />
+      <N8AO aoRadius={8} distanceFalloff={0.2} intensity={10} />
+      <Noise opacity={0.03} />
+        </>
+      ) : null}
     </EffectComposer>
   );
 }

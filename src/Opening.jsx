@@ -1,6 +1,7 @@
 import { PositionPoint, Text, PositionalAudio } from "@react-three/drei"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useContext} from "react"
 import gsap from "gsap"
+import { GameContext } from "./main"
 
 export const Opening = () => {
   const galaxy = useRef();
@@ -9,6 +10,8 @@ export const Opening = () => {
   const wars = useRef();
   const text = useRef();
   const audio = useRef();
+  const { setup } = useContext(GameContext);
+
 
   useEffect(() => {
     const tl = gsap.timeline({repeat: 0, delay: 1});
@@ -19,8 +22,7 @@ export const Opening = () => {
     tl.to(galaxy.current, {fillOpacity: 0, duration: 1, delay:5, ease: 'power1.inOut'}, 'start2')
     tl.add('start3');
     tl.set(starwars.current, {visible: true, delay:2}, 'start3')
-    tl.set(audio.current, {play:true, delay: 0}, 'start3')
-
+    setup.sound &&     tl.set(audio.current, {play:true, delay: 0}, 'start3');
     tl.set(galaxy.current, {visible: false}, 'start3')
     tl.to(starwars.current.position, {z: 40, duration: 50, ease: 'power1.inOut'}, 'start3')
     tl.to(text.current.position, {y: 40, duration: 200, delay: 5}, 'start3')
