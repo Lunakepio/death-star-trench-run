@@ -61,11 +61,7 @@ export const LandingExperience = () => {
           });
         }
         if (status === 'takeOff') {
-          const tl = gsap.timeline({
-            onComplete: () => {
-              setStatus('done');
-            }
-          });
+          const tl = gsap.timeline();
           tl.to(group.current.position, {
             duration: 10,
             z : 5,
@@ -92,11 +88,14 @@ export const LandingExperience = () => {
             duration: 4, 
             x: -2000,
             ease: 'expo.in',
-            delay:3,
+            delay:0,
           }, 'end');
           setTimeout(() => {
             setJump(true);
-          }, 10000);
+          }, 8000);
+          setTimeout(() => {
+            setStatus('done');
+          }, 14000);
         }
         
     }, [status])
