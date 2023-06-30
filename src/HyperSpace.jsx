@@ -36,7 +36,7 @@ export const Particles = () => {
     return (
         <>
             <StarParticles count={5000}/>
-            <PositionalAudio url="/sounds/hyperspace.mp3" distance={100} autoplay={true} loop={false} />
+            {setup.sound ? <PositionalAudio url="/sounds/hyperspace.mp3" distance={100} autoplay={true} loop={false} /> : null}
         </>
     );
 };
