@@ -1,13 +1,12 @@
-import React, { useRef, useState, useContext} from "react";
+import React, { useRef, useState} from "react";
 import { useFrame } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
 import { PositionalAudio } from "@react-three/drei";
-import { GameContext } from "./main";
+
 
 
 
 export const Projectile = ({ position, rotation, forwardVector, enemy }) => {
-  const { setup } = useContext(GameContext);
   const ref = useRef();
   const meshRef = useRef();
   const geometryRef = useRef();
@@ -57,7 +56,7 @@ export const Projectile = ({ position, rotation, forwardVector, enemy }) => {
               distance={10}
               volume={0.1}
               loop={false}
-              autoplay={setup.sound}
+              autoplay={true}
             />
           </mesh>
         </RigidBody>
