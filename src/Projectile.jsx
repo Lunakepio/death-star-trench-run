@@ -18,7 +18,7 @@ export const Projectile = ({ position, rotation, forwardVector, enemy }) => {
   useFrame(() => {
     frameCount.current++;
     if (!shouldRemove && frameCount.current < 15 && ref.current) {
-      ref.current.applyImpulse(forwardVector.clone().multiplyScalar(0.1));
+      ref.current.applyImpulse(forwardVector.clone().multiplyScalar(0.3));
     }
 
     if (frameCount.current > 300) {
@@ -43,7 +43,7 @@ export const Projectile = ({ position, rotation, forwardVector, enemy }) => {
         >
           <mesh ref={meshRef} raycast={(e) => {
           }}>
-            <boxGeometry args={[0.05, 0.05, 2]} ref={geometryRef} />
+            <boxGeometry args={[0.05, 0.05, 4]} ref={geometryRef} />
             <meshPhongMaterial
               emissive={!enemy ? "#fc6f03" : "#00FF00"}
               emissiveIntensity={4}

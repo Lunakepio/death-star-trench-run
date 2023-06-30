@@ -1,8 +1,8 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow:hidden;
+  overflow: hidden;
   user-select: none;
 }
 
@@ -11,7 +11,8 @@
   src: url("/fonts/fonts/ITCAvantGardeStd-BkObl.eot");
   src: local("/fonts/ITC Avant Garde Gothic Std Book Oblique"),
     local("/fonts/ITCAvantGardeStd-BkObl"),
-    url("/fonts/fonts/ITCAvantGardeStd-BkObl.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/fonts/ITCAvantGardeStd-BkObl.eot?#iefix")
+      format("embedded-opentype"),
     url("/fonts/fonts/ITCAvantGardeStd-BkObl.woff2") format("woff2"),
     url("/fonts/ITCAvantGardeStd-BkObl.woff") format("woff"),
     url("/fonts/ITCAvantGardeStd-BkObl.ttf") format("truetype");
@@ -24,7 +25,8 @@
   src: url("/fonts/ITCAvantGardeStd-XLtCnObl.eot");
   src: local("ITC Avant Garde Gothic Std Extra Light Condensed Oblique"),
     local("ITCAvantGardeStd-XLtCnObl"),
-    url("/fonts/ITCAvantGardeStd-XLtCnObl.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/ITCAvantGardeStd-XLtCnObl.eot?#iefix")
+      format("embedded-opentype"),
     url("/fonts/ITCAvantGardeStd-XLtCnObl.woff2") format("woff2"),
     url("/fonts/ITCAvantGardeStd-XLtCnObl.woff") format("woff"),
     url("/fonts/ITCAvantGardeStd-XLtCnObl.ttf") format("truetype");
@@ -50,7 +52,8 @@
   src: url("/fonts/ITCAvantGardeStd-DemiObl.eot");
   src: local("ITC Avant Garde Gothic Std Demi Oblique"),
     local("ITCAvantGardeStd-DemiObl"),
-    url("/fonts/ITCAvantGardeStd-DemiObl.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/ITCAvantGardeStd-DemiObl.eot?#iefix")
+      format("embedded-opentype"),
     url("/fonts/ITCAvantGardeStd-DemiObl.woff2") format("woff2"),
     url("/fonts/ITCAvantGardeStd-DemiObl.woff") format("woff"),
     url("/fonts/ITCAvantGardeStd-DemiObl.ttf") format("truetype");
@@ -89,7 +92,8 @@
   src: url("/fonts/ITCAvantGardeStd-BoldObl.eot");
   src: local("ITC Avant Garde Gothic Std Bold Oblique"),
     local("ITCAvantGardeStd-BoldObl"),
-    url("/fonts/ITCAvantGardeStd-BoldObl.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/ITCAvantGardeStd-BoldObl.eot?#iefix")
+      format("embedded-opentype"),
     url("/fonts/ITCAvantGardeStd-BoldObl.woff2") format("woff2"),
     url("/fonts/ITCAvantGardeStd-BoldObl.woff") format("woff"),
     url("/fonts/ITCAvantGardeStd-BoldObl.ttf") format("truetype");
@@ -141,7 +145,8 @@
   src: url("/fonts/ITCAvantGardeStd-BkCnObl.eot");
   src: local("ITC Avant Garde Gothic Std Book Condensed Oblique"),
     local("ITCAvantGardeStd-BkCnObl"),
-    url("/fonts/ITCAvantGardeStd-BkCnObl.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/ITCAvantGardeStd-BkCnObl.eot?#iefix")
+      format("embedded-opentype"),
     url("/fonts/ITCAvantGardeStd-BkCnObl.woff2") format("woff2"),
     url("/fonts/ITCAvantGardeStd-BkCnObl.woff") format("woff"),
     url("/fonts/ITCAvantGardeStd-BkCnObl.ttf") format("truetype");
@@ -154,7 +159,8 @@
   src: url("/fonts/ITCAvantGardeStd-BoldCnObl.eot");
   src: local("ITC Avant Garde Gothic Std Bold Condensed Oblique"),
     local("ITCAvantGardeStd-BoldCnObl"),
-    url("/fonts/ITCAvantGardeStd-BoldCnObl.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/ITCAvantGardeStd-BoldCnObl.eot?#iefix")
+      format("embedded-opentype"),
     url("/fonts/ITCAvantGardeStd-BoldCnObl.woff2") format("woff2"),
     url("/fonts/ITCAvantGardeStd-BoldCnObl.woff") format("woff"),
     url("/fonts/ITCAvantGardeStd-BoldCnObl.ttf") format("truetype");
@@ -204,7 +210,8 @@
   src: url("/fonts/ITCAvantGardeStd-DemiCnObl.eot");
   src: local("ITC Avant Garde Gothic Std Demi Condensed Oblique"),
     local("ITCAvantGardeStd-DemiCnObl"),
-    url("/fonts/ITCAvantGardeStd-DemiCnObl.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/ITCAvantGardeStd-DemiCnObl.eot?#iefix")
+      format("embedded-opentype"),
     url("/fonts/ITCAvantGardeStd-DemiCnObl.woff2") format("woff2"),
     url("/fonts/ITCAvantGardeStd-DemiCnObl.woff") format("woff"),
     url("/fonts/ITCAvantGardeStd-DemiCnObl.ttf") format("truetype");
@@ -217,7 +224,8 @@
   src: url("/fonts/ITCAvantGardeStd-MdCnObl.eot");
   src: local("ITC Avant Garde Gothic Std Medium Condensed Oblique"),
     local("ITCAvantGardeStd-MdCnObl"),
-    url("/fonts/ITCAvantGardeStd-MdCnObl.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/ITCAvantGardeStd-MdCnObl.eot?#iefix")
+      format("embedded-opentype"),
     url("/fonts/ITCAvantGardeStd-MdCnObl.woff2") format("woff2"),
     url("/fonts/ITCAvantGardeStd-MdCnObl.woff") format("woff"),
     url("/fonts/ITCAvantGardeStd-MdCnObl.ttf") format("truetype");
@@ -524,4 +532,59 @@
       }
     }
   }
+}
+
+.loading {
+  background: #1e1e1e;
+  .logo {
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    color: white;
+    font-size: 30px;
+    img {
+      width: 50px;
+      filter: invert(1);
+      animation: loading 4s infinite linear;
+    }
+  }
+  .row{
+    position:absolute;
+    top:70%;
+    width:100%;
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+    .trails{
+      display:flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      gap:16px;
+      .trail{
+        width:100%;
+        height: 2px;
+        background: linear-gradient(-90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);      }
+    }
+    .ship{
+      img{
+        position:relative;
+        top:4px;
+        height:50px;
+      }
+    }
+  }
+}
+
+@keyframes loading {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+  
 }

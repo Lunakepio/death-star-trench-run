@@ -21,8 +21,8 @@ export const Landing = () => {
           <color attach="background" args={["#000"]} />
           <Suspense fallback={null}>
             <LandingExperience />
+            </Suspense>
             <Composer />
-          </Suspense>
         </Canvas>
         <Web />
       </div>

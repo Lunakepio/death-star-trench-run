@@ -70,7 +70,7 @@ function handleMouse(
   const distance = 400;
   const projectilePosition = ref.position.clone();
   const projectileRotation = ref.rotation.clone();
-  projectilePosition.z += 2;
+  projectilePosition.z += 1;
   const angleA = Math.atan2(1, distance);
   const angleB = Math.atan2(0.33, distance);
   const projectileQuaternion = ref.quaternion.clone();

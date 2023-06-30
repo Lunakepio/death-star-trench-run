@@ -8,12 +8,12 @@ import {
   Loader,
   OrbitControls,
   Preload,
-  Stats,
 } from "@react-three/drei";
 import { Web } from "./Web";
 import "./globals.scss";
 import { Landing } from "./Landing";
 import { GameContext } from "./main";
+import { LoadingScreen } from "./LoadingScreen";
 
 export const Controls = {
   up: "up",
@@ -33,7 +33,7 @@ function App() {
   return (
     <div className="" style={{ width: "100vw", height: "100vh" }}>
       {status !== "done" ? <Landing /> : <Game />}
-      {/* <Loader /> */}
+      <LoadingScreen />
     </div>
   );
 }
@@ -68,8 +68,7 @@ function Game(){
           <Experience />
         </KeyboardControls>
       </Physics>
-      <Stats />
-      <Preload all />
+      {/* <Preload all /> */}
     </Suspense>
   </Canvas>
   )
