@@ -54,7 +54,7 @@ export const Projectile = ({ position, rotation, forwardVector, enemy }) => {
             />
             <PositionalAudio
               url={!enemy ? "/sounds/Blaster3.wav" : "/sounds/tieBlaster.wav"}
-              distance={40}
+              distance={10}
               volume={0.1}
               loop={false}
               autoplay={setup.sound}
