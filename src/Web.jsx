@@ -282,13 +282,13 @@ export const Web = () => {
               <p>SOUND</p>
               <div className="options">
                 <div
-                  className={`option ${setup.sound === "on" ? "active" : ""}`}
+                  className={`option ${setup.sound === true ? "active" : ""}`}
                   onClick={() => setSetup({ ...setup, sound: true })}
                 >
                   ON
                 </div>
                 <div
-                  className={`option ${setup.sound === "off" ? "active" : ""}`}
+                  className={`option ${setup.sound === false ? "active" : ""}`}
                   onClick={() => setSetup({ ...setup, sound: false })}
                 >
                   OFF
