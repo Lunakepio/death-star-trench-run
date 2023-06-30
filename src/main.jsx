@@ -16,7 +16,7 @@ const GameProvider = ({ children }) => {
   const [setup, setSetup] = useState({
     mouse: false,
     invertLook: false,
-    graphics: "medium",
+    graphics: 1,
     sound: true,
   });
 

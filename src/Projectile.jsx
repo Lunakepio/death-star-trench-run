@@ -1,7 +1,6 @@
 import React, { useRef, useState} from "react";
 import { useFrame } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
-import { PositionalAudio } from "@react-three/drei";
 
 
 export const Projectile = ({ position, rotation, forwardVector, enemy }) => {
@@ -48,13 +47,6 @@ export const Projectile = ({ position, rotation, forwardVector, enemy }) => {
               toneMapped={false}
               position={realPosition}
               rotation={rotation}
-            />
-            <PositionalAudio
-              url={!enemy ? "/sounds/Blaster3.wav" : "/sounds/tieBlaster.wav"}
-              distance={40}
-              volume={0.1}
-              loop={false}
-              autoplay={true}
             />
           </mesh>
         </RigidBody>

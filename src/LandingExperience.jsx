@@ -33,10 +33,8 @@ export const LandingExperience = () => {
 
 
   useEffect(() => {
-    console.log(status)
     
     if (status === 'active') {
-      console.log('active')
       gsap.to(cam.current.position, {
         duration: 10,
         x: activeTargetPosition[0],
@@ -46,7 +44,6 @@ export const LandingExperience = () => {
         })
       }
       if (status === 'config') {
-        console.log('continue')
         gsap.to(cam.current.position, {
           duration: 10,
           x: continueTargetPosition[0],
@@ -105,7 +102,6 @@ export const LandingExperience = () => {
 
   useFrame(({ clock, mouse, camera}) => {
     
-    console.log(status)
     const groupPosition = group.current.position.clone();
     const groupRotation = group.current.rotation.clone();
     groupPosition.y -= 3;

@@ -16,8 +16,7 @@ function handleMouse(pos, ref, ringOne, ringTwo, shotsFired, setProjectiles, lig
   const projectileRotation = ref.rotation.clone();
   projectilePosition.y -= 18;
   // projectileRotation.x += Math.PI / 2;
-  console.log(pos, projectilePosition)
-  console.log(ref);
+
 
 
   if (shotsFired === 1) {

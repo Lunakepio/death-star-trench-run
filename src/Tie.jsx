@@ -20,7 +20,6 @@ export function Tie(props) {
           distance={5}
           loop={true}
           autoplay={true}
-
         />
     </group>
   )

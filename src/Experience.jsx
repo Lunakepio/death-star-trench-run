@@ -17,6 +17,9 @@ import {
   SSR,
   SMAA,
   SSAO,
+  N8AO,
+  GodRays,
+  Noise,
 } from "@react-three/postprocessing";
 import { BlendFunction, LUTCubeLoader } from "postprocessing";
 import { useLoader, useFrame } from "@react-three/fiber";
@@ -30,7 +33,7 @@ import { TrenchTurret } from "./Trench";
 
 export const Experience = () => {
   const finalValue = 500.5020;
-  const { gameStarted, setGameStarted } = useContext(GameContext);
+  const { gameStarted, setGameStarted, setup } = useContext(GameContext);
   return (
     <>
       <directionalLight position-y={100} intensity={0.1} />
@@ -49,14 +52,14 @@ export const Experience = () => {
       </group>
       {/* <Enemies /> */}
 
-      <World />
-      <Player /> 
+      <World setup={setup}/>
+      <Player setup={setup} /> 
       {/* <OrbitControls /> */}
       {/* <SoftShadows /> */}
       {/* <OrbitControls/> */}
       <Environment preset="night" />
 
-      <Composer />
+      <Composer setup={setup} />
     </>
   );
 };
@@ -95,6 +98,8 @@ function World() {
   );
 }
 export const Composer = () => {
+  const { gameStarted, setGameStarted, setup } = useContext(GameContext);
+
   const texture = useLoader(LUTCubeLoader, "/F-6800-STD.cube");
   const all = {
     enabled: true,
@@ -129,14 +134,23 @@ export const Composer = () => {
     ior: 1.45
   };
 
+  const graphics = setup.graphics;
+
+  const multisamplingValues = [0, 0, 8];
+
   return (
-    <EffectComposer multisampling={0} disableGamma disableNormalPass>
+    <EffectComposer multisampling={multisamplingValues[graphics]} disableGamma disableNormalPass>
       <Bloom luminanceThreshold={1} intensity={2} levels={9} mipmapBlur />
       <LUT lut={texture} />
       <BrightnessContrast brightness={0} contrast={0.1} />
       <HueSaturation hue={0} saturation={-0.25} />
-      <SMAA />
-      {/* <SSR {...all}/> */}
+      {graphics === 2 ? (
+        <>
+        <SMAA />
+      <N8AO aoRadius={8} distanceFalloff={0.2} intensity={10} />
+      <Noise opacity={0.03} />
+        </>
+      ) : null}
     </EffectComposer>
   );
 }

@@ -254,25 +254,25 @@ export const Web = () => {
               <div className="options">
                 <div
                   className={`option ${
-                    setup.graphics === "low" ? "active" : ""
+                    setup.graphics === 0 ? "active" : ""
                   }`}
-                  onClick={() => setSetup({ ...setup, graphics: "low" })}
+                  onClick={() => setSetup({ ...setup, graphics: 0 })}
                 >
                   LOW
                 </div>
                 <div
                   className={`option ${
-                    setup.graphics === "medium" ? "active" : ""
+                    setup.graphics === 1 ? "active" : ""
                   }`}
-                  onClick={() => setSetup({ ...setup, graphics: "medium" })}
+                  onClick={() => setSetup({ ...setup, graphics: 1 })}
                 >
                   MEDIUM
                 </div>
                 <div
                   className={`option ${
-                    setup.graphics === "high" ? "active" : ""
+                    setup.graphics === 2 ? "active" : ""
                   }`}
-                  onClick={() => setSetup({ ...setup, graphics: "high" })}
+                  onClick={() => setSetup({ ...setup, graphics: 2 })}
                 >
                   HIGH
                 </div>
