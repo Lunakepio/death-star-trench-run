@@ -6,7 +6,6 @@ import { PositionalAudio } from '@react-three/drei';
 
 const StarParticles = ({ count = 10000, jump }) => {
     const groupRef = useRef();
-    const { setup, setSetup } = useContext(GameContext);
 
     useEffect(() => {
         for (let i = 0; i < count; i++) {
@@ -33,6 +32,8 @@ const StarParticles = ({ count = 10000, jump }) => {
 };
 
 export const Particles = () => {
+    const { setup, setSetup } = useContext(GameContext);
+
     return (
         <>
             <StarParticles count={5000}/>

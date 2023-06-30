@@ -1,13 +1,12 @@
-import { Environment, OrbitControls, Stars, CubeCamera, PerspectiveCamera, ContactShadows, Html } from '@react-three/drei'
+import { Environment, OrbitControls, Stars, CubeCamera, PerspectiveCamera, ContactShadows, Html, PositionalAudio } from '@react-three/drei'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { useState, useRef, useContext } from 'react'
+import { useState, useRef, useContext, useEffect } from 'react'
 import { Hangar } from './Hangar'
 // import { Ship } from './X-wing'
 import { Ship } from './Ship.jsx'
 import * as THREE from 'three'
 import { CameraShake } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
-import { useEffect } from 'react'
 import { Particles } from './HyperSpace';
 import { GameContext } from './main'
 import gsap from 'gsap';
@@ -17,10 +16,11 @@ import gsap from 'gsap';
 
 
 export const LandingExperience = () => {
-  const { status, setStatus } = useContext(GameContext);
+  const { status, setStatus, setup } = useContext(GameContext);
   const cam = useRef();
   const position=[-2, 15, 20]
   const group = useRef()
+  const R2 = useRef();
 
   const damping = 0.02;
   const targetVelocity = new THREE.Vector3();
@@ -76,6 +76,9 @@ export const LandingExperience = () => {
             }
             , 'start'
           )
+          if(R2.current){
+            tl.set(R2.current, { play : true, delay: 3 }, 'start')
+          }
           tl.add('end');
           tl.to(group.current.position, {
             duration: 10,
@@ -146,6 +149,7 @@ export const LandingExperience = () => {
     {jump && <Particles/>}
     <group ref={group} >
     <Ship position={[0, -3.1, 0]} rotation-y={Math.PI}/>
+    {setup.sound ? <PositionalAudio ref={R2} url="/sounds/R2TAKEOFF.mp3" distance={10} loop={false} /> : null}
 
     {/* <ContactShadows  width={10} height={10} blur={1} far={4} /> */}
     <PerspectiveCamera fov={35} ref={cam} near={0.1} far={1000}  makeDefault position={[10, -3.5, 20]} />
