@@ -17,7 +17,7 @@ const GameProvider = ({ children }) => {
     mouse: false,
     invertLook: false,
     graphics: "medium",
-    sound: "on",
+    sound: true,
   });
 
   const [status, setStatus] = useState("");

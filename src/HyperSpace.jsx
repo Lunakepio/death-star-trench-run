@@ -1,9 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useContext } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { GameContext } from './main';
+import { PositionalAudio } from '@react-three/drei';
 
 const StarParticles = ({ count = 10000, jump }) => {
     const groupRef = useRef();
+    const { setup, setSetup } = useContext(GameContext);
 
     useEffect(() => {
         for (let i = 0; i < count; i++) {
@@ -31,6 +34,9 @@ const StarParticles = ({ count = 10000, jump }) => {
 
 export const Particles = () => {
     return (
-        <StarParticles count={5000}/>
+        <>
+            <StarParticles count={5000}/>
+            <PositionalAudio url="/sounds/hyperspace.mp3" distance={100} autoplay={true} loop={false} />
+        </>
     );
 };
