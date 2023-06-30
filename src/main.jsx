@@ -20,7 +20,7 @@ const GameProvider = ({ children }) => {
     sound: true,
   });
 
-  const [status, setStatus] = useState("done");
+  const [status, setStatus] = useState("");
 
   return(
     <GameContext.Provider value={{ gameStarted, setGameStarted, setup, setSetup, status, setStatus }}>
