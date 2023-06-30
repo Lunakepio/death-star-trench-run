@@ -564,7 +564,10 @@
       justify-content: flex-start;
       align-items: center;
       gap:16px;
+      transition : all 0.2s ease-in-out 0s;
       .trail{
+        transition : all 0.2s ease-in-out 0s;
+
         width:100%;
         height: 2px;
         background: linear-gradient(-90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);      }
