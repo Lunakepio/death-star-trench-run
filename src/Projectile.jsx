@@ -1,9 +1,13 @@
-import React, { useRef, useState} from "react";
+import React, { useRef, useState, useContext} from "react";
 import { useFrame } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
+import { PositionalAudio } from "@react-three/drei";
+import { GameContext } from "./main";
+
 
 
 export const Projectile = ({ position, rotation, forwardVector, enemy }) => {
+  const { setup } = useContext(GameContext);
   const ref = useRef();
   const meshRef = useRef();
   const geometryRef = useRef();
@@ -47,6 +51,12 @@ export const Projectile = ({ position, rotation, forwardVector, enemy }) => {
               toneMapped={false}
               position={realPosition}
               rotation={rotation}
+            />
+            <PositionalAudio
+              url={!enemy ? "/sounds/Blaster3.wav" : "/sounds/tieBlaster.wav"}
+              distance={5}
+              loop={false}
+              autoplay={setup.sound}
             />
           </mesh>
         </RigidBody>

@@ -200,7 +200,7 @@ export const Player = () => {
         boxRef.current.rotation.set(0, 0, 0);
        if(setup.mouse){
         boxRef.current.position.x = -mouse.x * viewport.width * 0.1;
-        boxRef.current.position.y = setup.invertLook ? -mouse.y * viewport.height * 0.1 : mouse.y * viewport.height * 0.1;
+        boxRef.current.position.y = setup.invertLook ? mouse.y * viewport.height * 0.1 : -mouse.y * viewport.height * 0.1;
        } else {
         boxRef.current.position.x += leftPressed ? boxSpeed : 0;
         boxRef.current.position.x += rightPressed ? -boxSpeed : 0;

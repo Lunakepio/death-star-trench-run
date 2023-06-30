@@ -2,11 +2,12 @@ import { CapsuleCollider, RigidBody } from "@react-three/rapier";
 import { Tie } from "./Tie";
 import { Box, PositionalAudio,  } from "@react-three/drei";
 import { Projectile } from "./Projectile";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { gsap } from "gsap";
 import { Particles } from "./Particles";
+import { GameContext } from "./main";
 
 function handleMouse(ref, ringOne, ringTwo, shotsFired, setProjectiles, light) {
   const projectilePosition = ref.position.clone();
@@ -92,6 +93,8 @@ export const Enemies = () => {
   const xOffset = Math.random() * 20 - 10;
   const sound = useRef();
   const shouldPlay = useRef(true);
+
+  const { setup } = useContext(GameContext);
   useFrame(({ clock, camera }) => {
 
     if (alive.current) {
@@ -158,7 +161,7 @@ export const Enemies = () => {
       }
     } else {
       if (shouldPlay.current) {
-        sound.current.play();
+        setup.sound && sound.current.play();
         shouldPlay.current = false;
       }
       gsap.to(ref.current.position, {
