@@ -23,6 +23,7 @@ export const Controls = {
   boost: "boost",
   shoot: "shoot",
   slow: "slow",
+  reset : "reset",
 };
 
 function App() {
@@ -48,18 +49,16 @@ function Game(){
       { name: Controls.boost, keys: ["Space"] },
       { name: Controls.slow, keys: ["Shift"] },
       { name: Controls.shoot, keys: ["KeyE", "Click"] },
+      { name: Controls.reset, keys: ["KeyR"] },
     ],
     []
   );
   return (
+    
     <Canvas
-    dpr={[1, 1]}
-    gl={{
-      powerPreference: "low-power",
-      antialias: false,
-      stencil: false,
-      depth: false,
-    }}
+        dpr={[1, 1]}
+        gl={{ antialias: false, stencil: false,depth: false }}
+        // style={{ cursor: "none"}}
   >
     <color attach="background" args={[0.0015, 0.0015, 0.0025]} />
     <Suspense>

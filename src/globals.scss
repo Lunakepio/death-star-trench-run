@@ -591,3 +591,32 @@
   }
   
 }
+
+.hud{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events:none;
+  width: 100vw;
+  height: 100vh;
+
+  .health{
+    position:absolute;
+    top: 90vh;
+    left: 50%;
+    transform: translateX(-50%) rotateX(22deg);
+    width: 400px;
+    height: 20px;
+    border: 2px solid #e4e4e4b7;
+    display:flex;
+    justify-content:flex-start;
+    backdrop-filter: blur(10px);
+    .healthBar{
+      transition: all 0.3s ease 0s;
+      height:100%;
+      background: #e4e4e4b7;
+    }
+  }
+}

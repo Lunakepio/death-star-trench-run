@@ -31,7 +31,6 @@ export const Web = () => {
 
   const handleButtonClick = () => {
     active.current = !active.current;
-    console.log(active.current);
     const tl = gsap.timeline();
     tl.add("start4");
     tl.to(

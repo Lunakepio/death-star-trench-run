@@ -11,11 +11,11 @@ import { useFrame, useThree, extend } from "@react-three/fiber";
 import * as THREE from "three";
 import blaster3 from "/sounds/Blaster3.wav";
 import { Controls } from "./App";
-import { Particles } from "./Particles";
 import gsap from "gsap";
 import { GameContext } from "./main";
 import { Projectile } from "./Projectile";
 import { XWingShadows } from "./X-WingShadows";
+import Explosion from "./Explode";
 
 function animateShoot(ref, light) {
   gsap.set(ref.scale, {
@@ -65,9 +65,9 @@ function handleMouse(
   lightOne,
   lightTwo,
   lightThree,
-  lightFour
+  lightFour,
 ) {
-  const distance = 400;
+  const distance = 300;
   const projectilePosition = ref.position.clone();
   const projectileRotation = ref.rotation.clone();
   projectilePosition.z += 1;
@@ -133,18 +133,26 @@ export const Player = () => {
 
   const lastShotTime = useRef(0);
   const audio = useRef();
-  const health = useRef(100);
   const [projectiles, setProjectiles] = React.useState([]);
   const wingsOpen = useRef(true);
   const shotsFired = useRef(0);
-  const [alive, setAlive] = React.useState(true);
-  const { gameStarted, setGameStarted, setup } = useContext(GameContext);
+  const {
+    gameStarted,
+    setGameStarted,
+    setup,
+    reset,
+    setReset,
+    playerAlive,
+    setPlayerAlive,
+    setParticles,
+    playerHealth,
+  } = useContext(GameContext);
   let distance = 5;
   const [bodyPosition, setBodyPosition] = React.useState([0, 0, 0]);
   const [bodyRotation, setBodyRotation] = React.useState([0, 0, 0]);
 
   const speed = useRef(0.2);
-  const [cameraDistance, setCameraDistance] = React.useState(-6);
+  const [cameraDistance, setCameraDistance] = React.useState(-5);
   const mousePressed = useRef(false);
 
   const upPressed = useKeyboardControls((state) => state[Controls.up]);
@@ -154,17 +162,19 @@ export const Player = () => {
   const shootPressed = useKeyboardControls((state) => state[Controls.shoot]);
   const boostPressed = useKeyboardControls((state) => state[Controls.boost]);
   const slowPressed = useKeyboardControls((state) => state[Controls.slow]);
+  const resetPressed = useKeyboardControls((state) => state[Controls.reset]);
   const wingsTarget = useRef(true);
 
   const play = useRef(false);
   const boxSpeed = 0.15;
 
-  const attackSpeed = 0.08;
+  const attackSpeed = 0.12;
+
   useFrame(({ mouse, clock, viewport }) => {
     const cam = camera.current;
     const currentTime = clock.getElapsedTime();
     if (gameStarted) {
-      if (alive) {
+      if (playerAlive) {
         if (!wingsOpen.current) {
           if (speed.current < 0.3) {
             speed.current += 0.001;
@@ -198,20 +208,22 @@ export const Player = () => {
         }
 
         boxRef.current.rotation.set(0, 0, 0);
-       if(setup.mouse){
-        boxRef.current.position.x = -mouse.x * viewport.width * 0.1;
-        boxRef.current.position.y = setup.invertLook ? mouse.y * viewport.height * 0.1 : -mouse.y * viewport.height * 0.1;
-       } else {
-        boxRef.current.position.x += leftPressed ? boxSpeed : 0;
-        boxRef.current.position.x += rightPressed ? -boxSpeed : 0;
-        if(setup.invertLook){
-          boxRef.current.position.y += upPressed ? -boxSpeed : 0;
-          boxRef.current.position.y += downPressed ? boxSpeed : 0;
+        if (setup.mouse) {
+          boxRef.current.position.x = -mouse.x * viewport.width * 0.1;
+          boxRef.current.position.y = setup.invertLook
+            ? mouse.y * viewport.height * 0.1
+            : -mouse.y * viewport.height * 0.1;
         } else {
-          boxRef.current.position.y += upPressed ? boxSpeed : 0;
-          boxRef.current.position.y += downPressed ? -boxSpeed : 0;
+          boxRef.current.position.x += leftPressed ? boxSpeed : 0;
+          boxRef.current.position.x += rightPressed ? -boxSpeed : 0;
+          if (setup.invertLook) {
+            boxRef.current.position.y += upPressed ? -boxSpeed : 0;
+            boxRef.current.position.y += downPressed ? boxSpeed : 0;
+          } else {
+            boxRef.current.position.y += upPressed ? boxSpeed : 0;
+            boxRef.current.position.y += downPressed ? -boxSpeed : 0;
+          }
         }
-       }
 
         const boxPosition = new THREE.Vector3();
         boxPosition.setFromMatrixPosition(boxRef.current.matrixWorld);
@@ -257,8 +269,8 @@ export const Player = () => {
           ref.current.rotation.y,
           ref.current.rotation.z,
         ]);
-        if (health.current <= 0) {
-          setAlive(false);
+        if (playerHealth.current <= 0) {
+          setPlayerAlive(false);
         }
         if (
           (mousePressed.current &&
@@ -279,7 +291,7 @@ export const Player = () => {
             lightOne.current,
             lightTwo.current,
             lightThree.current,
-            lightFour.current
+            lightFour.current,
           );
           lastShotTime.current = currentTime;
           shotsFired.current += 1;
@@ -293,9 +305,20 @@ export const Player = () => {
       }
     } else {
     }
+
+    if (resetPressed) {
+      setReset(true);
+    }
+    if (reset) {
+      setPlayerAlive(true);
+      setProjectiles([]);
+      playerHealth.current = 100;
+      ref.current.position.set(0, 0, 0);
+      boxRef.current.position.set(0, 0, 10);
+      setReset(false);
+      cam.position.set(0, 0, 0);
+    }
   });
-
-
 
   useEffect(() => {
     window.addEventListener("mousedown", () => (mousePressed.current = true));
@@ -366,6 +389,7 @@ export const Player = () => {
             rotation={projectile.rotation}
             forwardVector={projectile.forwardVector}
             enemy={false}
+            setParticles={setParticles}
             key={index}
           />
         ))}
@@ -377,7 +401,10 @@ export const Player = () => {
           rotation={bodyRotation}
           onCollisionEnter={(e) => {
             if (e.colliderObject.name === "floor") {
-              health.current -= 100;
+              playerHealth.current -= 100;
+            } 
+            if(e.colliderObject.name === "enemyProjectile"){
+              playerHealth.current -= 5;
             }
           }}
         >
@@ -387,30 +414,79 @@ export const Player = () => {
           </mesh>
         </RigidBody>
         <group ref={ref}>
+          <group>
+            <mesh position-z={20} scale={[1.2, 1, 1]}>
+              <ringGeometry args={[1, 0.95, 16]} />
+              <meshBasicMaterial transparent opacity={0.4} color="white" />
+            </mesh>
+            <group rotation-z={Math.PI / 4} position-z={20}>
+              //adding crosshair
+              <mesh position={[-1.2, 0, 0]}>
+                <planeGeometry args={[1, 0.06]} />
+                <meshBasicMaterial
+                  transparent
+                  opacity={0.4}
+                  color="white"
+                  side={THREE.DoubleSide}
+                />
+              </mesh>
+              <mesh position={[1.2, 0, 0]}>
+                <planeGeometry args={[1, 0.06]} />
+                <meshBasicMaterial
+                  transparent
+                  opacity={0.4}
+                  color="white"
+                  side={THREE.DoubleSide}
+                />
+              </mesh>
+              <mesh position={[0, 1.2, 0]}>
+                <planeGeometry args={[0.06, 1]} />
+                <meshBasicMaterial
+                  transparent
+                  opacity={0.4}
+                  color="white"
+                  side={THREE.DoubleSide}
+                />
+              </mesh>
+              <mesh position={[0, -1.2, 0]}>
+                <planeGeometry args={[0.06, 1]} />
+                <meshBasicMaterial
+                  transparent
+                  opacity={0.4}
+                  color="white"
+                  side={THREE.DoubleSide}
+                />
+              </mesh>
+            </group>
+            <mesh position-z={40} scale={[1, 0.9, 0.9]}>
+              <ringGeometry args={[1, 0.95, 16]} />
+              <meshBasicMaterial transparent opacity={0.4} color="white" />
+            </mesh>
+          </group>
           <Xwing wingsOpen={wingsOpen} />
+          {!playerAlive && <Explosion scale={0.3} />}
           {/* <XWingShadows wingsOpen={wingsOpen} /> */}
 
-            <mesh
-              ref={ringOne}
-              position={[1, 0.335, 0.5]}
-              scale={0}
-              rotation={[0, 0, 0]}
-            >
-              <ringGeometry args={[1, 0.6, 16]} />
-              <meshStandardMaterial
-                emissive="#fc6f03"
-                emissiveIntensity={100}
-                toneMapped={false}
-                transparent
-              />
-              <pointLight
-                ref={lightOne}
-                intensity={0}
-                color="#fc6f03"
-                distance={10}
-
-              />
-            </mesh>
+          <mesh
+            ref={ringOne}
+            position={[1, 0.335, 0.5]}
+            scale={0}
+            rotation={[0, 0, 0]}
+          >
+            <ringGeometry args={[1, 0.6, 16]} />
+            <meshStandardMaterial
+              emissive="#fc6f03"
+              emissiveIntensity={100}
+              toneMapped={false}
+              transparent
+            />
+            <pointLight
+              ref={lightOne}
+              intensity={0}
+              color="#fc6f03"
+              distance={10}
+            />
+          </mesh>
           <mesh
             ref={ringTwo}
             position={[-1, -0.33, 0.5]}
@@ -429,7 +505,6 @@ export const Player = () => {
               intensity={0}
               color="#fc6f03"
               distance={10}
-
             />
           </mesh>
           <mesh
@@ -470,7 +545,6 @@ export const Player = () => {
               intensity={0}
               color="#fc6f03"
               distance={10}
-
             />
           </mesh>
         </group>

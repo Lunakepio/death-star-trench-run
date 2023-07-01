@@ -6,7 +6,6 @@ import { useRef, useState, useEffect, useContext } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { gsap } from "gsap";
-import { Particles } from "./Particles";
 import { GameContext } from "./main";
 
 function handleMouse(ref, ringOne, ringTwo, shotsFired, setProjectiles, light) {

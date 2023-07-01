@@ -3,6 +3,7 @@ import {
   Environment,
   OrbitControls,
   PerspectiveCamera,
+  PointerLockControls,
   SoftShadows,
   Stars,
 } from "@react-three/drei";
@@ -30,14 +31,15 @@ import { GameContext } from "./main";
 import { useContext, useRef, useState } from "react";
 import { Enemies } from "./Enemies";
 import { TrenchTurret } from "./Trench";
+import Particles from "./Particles";
 
 export const Experience = () => {
   const finalValue = 500.5020;
-  const { gameStarted, setGameStarted, setup } = useContext(GameContext);
+  const { gameStarted, setGameStarted, setup, particles } = useContext(GameContext);
   return (
     <>
       <directionalLight position-y={100} intensity={0.1} />
-      {/* <ambientLight intensity={0.2} /> */}
+      {/* <ambientLight intensity={0.5} /> */}
       <fog attach="fog" args={["#1b2e43",80, 100]} color={[0.0015,0.0015,0.0025]}/>
       <Stars
         radius={1000}
@@ -51,13 +53,15 @@ export const Experience = () => {
       {/* <Opening /> */}
       </group>
       {/* <Enemies /> */}
-
-      <World setup={setup}/>
+      {particles.map((particle, index) => ( // Render HitParticles on each hit.
+          <Particles key={index} position={particle.position} scale={0.3}  />
+        ))}
+        <World setup={setup}/>
       <Player setup={setup} /> 
       {/* <OrbitControls /> */}
       {/* <SoftShadows /> */}
       {/* <OrbitControls/> */}
-      <Environment preset="night" />
+      <Environment preset="night"  />
 
       <Composer setup={setup} />
     </>
@@ -73,7 +77,6 @@ function World() {
 
   return (
     <group>
-      {/* <Trench /> */}
       <TrenchTurret />
 
        <RigidBody type="fixed" name="floor" position={[4.2, -2.5,position]}>

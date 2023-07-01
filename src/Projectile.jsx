@@ -1,4 +1,4 @@
-import React, { useRef, useState} from "react";
+import React, { useRef, useState, useContext} from "react";
 import { useFrame } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
 import { PositionalAudio } from "@react-three/drei";
@@ -6,7 +6,7 @@ import { PositionalAudio } from "@react-three/drei";
 
 
 
-export const Projectile = ({ position, rotation, forwardVector, enemy }) => {
+export const Projectile = ({ position, rotation, forwardVector, enemy, setParticles }) => {
   const ref = useRef();
   const meshRef = useRef();
   const geometryRef = useRef();
@@ -18,13 +18,24 @@ export const Projectile = ({ position, rotation, forwardVector, enemy }) => {
   useFrame(() => {
     frameCount.current++;
     if (!shouldRemove && frameCount.current < 15 && ref.current) {
-      ref.current.applyImpulse(forwardVector.clone().multiplyScalar(0.3));
+      ref.current.applyImpulse(forwardVector.clone().multiplyScalar(0.2));
     }
 
-    if (frameCount.current > 300) {
+    if (frameCount.current > 400) {
       setShouldRemove(true);
     }
   });
+
+  function handleCollision(position){
+    setParticles((prev) => [
+      ...prev,
+      {
+        position: position,
+        scale: 0.3,
+      },
+    ]);
+    setShouldRemove(true);
+  }
 
   return (
     <>
@@ -35,10 +46,10 @@ export const Projectile = ({ position, rotation, forwardVector, enemy }) => {
           type="Dynamic"
           position={realPosition}
           rotation={rotation}
-          name={"projectile"}
+          name={!enemy ? "playerProjectile" : "enemyProjectile"}
           restitution={0}
-          onCollisionEnter={(otherObject) => {
-            setShouldRemove(true);
+          onCollisionEnter={({ manifold, target, other}) => {
+            handleCollision(manifold.solverContactPoint(0))
           }}
         >
           <mesh ref={meshRef} raycast={(e) => {
