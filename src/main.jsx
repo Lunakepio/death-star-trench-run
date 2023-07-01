@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 import { useRef } from 'react'
+import gsap from 'gsap'
 
 const initialContext = {
     gameStarted: false,
@@ -38,6 +39,7 @@ const GameProvider = ({ children }) => {
       const healthBar = healthBarRef.current;
       const width = `${playerHealth.current}%`;
       healthBar.style.width = width;
+      
     }, [playerHealth.current]);
   
     return <div className="healthBar" ref={healthBarRef}></div>;
