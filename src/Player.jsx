@@ -65,7 +65,7 @@ function handleMouse(
   lightOne,
   lightTwo,
   lightThree,
-  lightFour,
+  lightFour
 ) {
   const distance = 300;
   const projectilePosition = ref.position.clone();
@@ -163,7 +163,7 @@ export const Player = () => {
   const boostPressed = useKeyboardControls((state) => state[Controls.boost]);
   const slowPressed = useKeyboardControls((state) => state[Controls.slow]);
   const resetPressed = useKeyboardControls((state) => state[Controls.reset]);
-  const wingsTarget = useRef(true);
+  const wingsTarget = useRef(false);
 
   const play = useRef(false);
   const boxSpeed = 0.15;
@@ -209,10 +209,8 @@ export const Player = () => {
 
         boxRef.current.rotation.set(0, 0, 0);
         if (setup.mouse) {
-          boxRef.current.position.x = -mouse.x * viewport.width * 0.1;
-          boxRef.current.position.y = setup.invertLook
-            ? mouse.y * viewport.height * 0.1
-            : -mouse.y * viewport.height * 0.1;
+          boxRef.current.position.x = -mouse.x * 8
+          boxRef.current.position.y = setup.invertLook ? -mouse.y * 8: mouse.y * 8;
         } else {
           boxRef.current.position.x += leftPressed ? boxSpeed : 0;
           boxRef.current.position.x += rightPressed ? -boxSpeed : 0;
@@ -291,7 +289,7 @@ export const Player = () => {
             lightOne.current,
             lightTwo.current,
             lightThree.current,
-            lightFour.current,
+            lightFour.current
           );
           lastShotTime.current = currentTime;
           shotsFired.current += 1;
@@ -369,6 +367,14 @@ export const Player = () => {
     };
   }, []);
 
+  function handleCollision(name) {
+    if (name === "floor") {
+      playerHealth.current -= 100;
+    }
+    if (name === "enemyProjectile") {
+      playerHealth.current -= 5;
+    }
+  }
   return (
     <>
       <group>
@@ -400,11 +406,12 @@ export const Player = () => {
           position={bodyPosition}
           rotation={bodyRotation}
           onCollisionEnter={(e) => {
-            if (e.colliderObject.name === "floor") {
-              playerHealth.current -= 100;
-            } 
-            if(e.colliderObject.name === "enemyProjectile"){
-              playerHealth.current -= 5;
+            if (
+              e.colliderObject.name === "floor" ||
+              e.colliderObject.name === "enemyProjectile"
+            ) {
+              playerHealth.current -=
+                e.colliderObject.name === "floor" ? 100 : 5;
             }
           }}
         >

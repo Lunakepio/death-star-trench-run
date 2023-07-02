@@ -48,7 +48,7 @@ export const Projectile = ({ position, rotation, forwardVector, enemy, setPartic
           rotation={rotation}
           name={!enemy ? "playerProjectile" : "enemyProjectile"}
           restitution={0}
-          onCollisionEnter={({ manifold, target, other}) => {
+          onCollisionEnter={({ manifold }) => {
             handleCollision(manifold.solverContactPoint(0))
           }}
         >

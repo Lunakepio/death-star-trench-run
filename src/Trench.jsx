@@ -263,6 +263,7 @@ function Turret({ position, materials, nodes }) {
               setAlive(false);
               setParticles([]);
               setProjectiles([]);
+              health.current = 100;
             }
           }}
         >

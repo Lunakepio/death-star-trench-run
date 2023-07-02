@@ -58,16 +58,17 @@ function Game(){
     <Canvas
         dpr={[1, 1]}
         gl={{ antialias: false, stencil: false,depth: false }}
-        // style={{ cursor: "none"}}
+        style={{ cursor: "none"}}
   >
     <color attach="background" args={[0.0015, 0.0015, 0.0025]} />
-    <Suspense>
+    <Suspense fallback={LoadingScreen}>
       <Physics gravity={[0, 0, 0]}>
         <KeyboardControls map={map}>
           <Experience />
         </KeyboardControls>
       </Physics>
-      {/* <Preload all /> */}
+      <Preload all />
+
     </Suspense>
   </Canvas>
   )
