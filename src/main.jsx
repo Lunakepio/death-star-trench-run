@@ -13,7 +13,7 @@ const initialContext = {
 const GameContext = createContext(initialContext);
 
 const GameProvider = ({ children }) => {
-  const [gameStarted, setGameStarted] = useState(true);
+  const [gameStarted, setGameStarted] = useState(false);
 
   const [setup, setSetup] = useState({
     mouse: false,

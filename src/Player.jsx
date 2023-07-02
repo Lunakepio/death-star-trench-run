@@ -162,7 +162,6 @@ export const Player = () => {
   const shootPressed = useKeyboardControls((state) => state[Controls.shoot]);
   const boostPressed = useKeyboardControls((state) => state[Controls.boost]);
   const slowPressed = useKeyboardControls((state) => state[Controls.slow]);
-  const resetPressed = useKeyboardControls((state) => state[Controls.reset]);
   const wingsTarget = useRef(false);
 
   const play = useRef(false);
@@ -303,10 +302,6 @@ export const Player = () => {
       }
     } else {
     }
-
-    if (resetPressed) {
-      setReset(true);
-    }
     if (reset) {
       setPlayerAlive(true);
       setProjectiles([]);
@@ -319,6 +314,7 @@ export const Player = () => {
   });
 
   useEffect(() => {
+    setGameStarted(true);
     window.addEventListener("mousedown", () => (mousePressed.current = true));
     window.addEventListener("mouseup", () => (mousePressed.current = false));
 
