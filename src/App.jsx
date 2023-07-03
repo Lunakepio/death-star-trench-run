@@ -56,8 +56,6 @@ function Game(){
   return (
     
     <Canvas
-        dpr={[1, 1]}
-        gl={{ antialias: false, stencil: false,depth: false }}
         style={{ cursor: "none"}}
   >
     <color attach="background" args={[0.0015, 0.0015, 0.0025]} />

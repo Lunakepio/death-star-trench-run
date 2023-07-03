@@ -142,8 +142,8 @@ export const Composer = () => {
   const multisamplingValues = [0, 0, 8];
 
   return (
-    <EffectComposer multisampling={multisamplingValues[graphics]}>
-      {/* <Bloom luminanceThreshold={1} intensity={2} mipmapBlur /> */}
+    <EffectComposer multisampling={multisamplingValues[graphics]} >
+      <Bloom luminanceThreshold={1} levels={9} intensity={2} mipmapBlur />
       <LUT lut={texture} />
       <BrightnessContrast brightness={0} contrast={0.1} />
       <HueSaturation hue={0} saturation={-0.25} />
