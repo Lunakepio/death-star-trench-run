@@ -60,12 +60,12 @@ export const Projectile = ({
       <mesh ref={meshRef}>
         <boxGeometry args={[0.05, 0.05, 4]} ref={geometryRef} />
         <meshPhongMaterial
-          emissive="#fc6f03"
+          emissive="#00FF00"
           emissiveIntensity={4}
           toneMapped={false}
         />
         <PositionalAudio
-          url="/sounds/Blaster3.wav"
+          url="/sounds/tieBlaster.wav"
           distance={10}
           volume={0.1}
           loop={false}

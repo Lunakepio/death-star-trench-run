@@ -70,7 +70,7 @@ function handleMouse(
   const distance = 300;
   const projectilePosition = ref.position.clone();
   const projectileRotation = ref.rotation.clone();
-  projectilePosition.z += 1;
+  projectilePosition.z += 2;
   const angleA = Math.atan2(1, distance);
   const angleB = Math.atan2(0.33, distance);
   const projectileQuaternion = ref.quaternion.clone();
@@ -112,7 +112,6 @@ function handleMouse(
       position: projectilePosition,
       rotation: projectileRotation,
       forwardVector: forwardVector,
-      enemy: false,
     },
   ]);
 }
@@ -256,16 +255,6 @@ export const Player = () => {
         cam.rotation.x = ref.current.position.y * 0.02;
         cam.rotation.y = Math.PI - ref.current.position.x * 0.02;
         cam.rotation.z = -ref.current.position.x * 0.01;
-        setBodyPosition([
-          ref.current.position.x,
-          ref.current.position.y,
-          ref.current.position.z,
-        ]);
-        setBodyRotation([
-          ref.current.rotation.x,
-          ref.current.rotation.y,
-          ref.current.rotation.z,
-        ]);
         if (playerHealth.current <= 0) {
           setPlayerAlive(false);
         }
@@ -311,6 +300,13 @@ export const Player = () => {
       setReset(false);
       cam.position.set(0, 0, 0);
     }
+    setBodyPosition([
+      ref.current.position.x,
+      ref.current.position.y,
+      ref.current.position.z - 1,
+    ]);
+    setBodyRotation([0,0,0]);
+    console.log(body.current)
   });
 
   useEffect(() => {
@@ -384,23 +380,12 @@ export const Player = () => {
         <mesh ref={boxRef} position={[0, 0, 10]} rotation={[0, 0, 0]}>
           {/* <Box /> */}
         </mesh>
-
-        {projectiles.map((projectile, index) => (
-          <Projectile
-            position={projectile.position}
-            rotation={projectile.rotation}
-            forwardVector={projectile.forwardVector}
-            enemy={false}
-            setParticles={setParticles}
-            key={index}
-          />
-        ))}
-
         <RigidBody
           ref={body}
-          type="dynamic"
+          type="Dynamic"
           position={bodyPosition}
           rotation={bodyRotation}
+          restitution={0}
           onCollisionEnter={(e) => {
             if (
               e.colliderObject.name === "floor" ||
@@ -411,11 +396,22 @@ export const Player = () => {
             }
           }}
         >
-          <mesh>
-            <boxGeometry args={[2, 1, 1]} />
+          <mesh position={bodyPosition} rotation={bodyRotation}>
+            <boxGeometry args={[2, 1, 0.3]} />
             <meshBasicMaterial color="red" visible={false} />
           </mesh>
         </RigidBody>
+
+        {projectiles.map((projectile, index) => (
+          <Projectile
+            position={projectile.position}
+            rotation={projectile.rotation}
+            forwardVector={projectile.forwardVector}
+            setParticles={setParticles}
+            key={index}
+          />
+        ))}
+
         <group ref={ref}>
           <group>
             <mesh position-z={20} scale={[1.2, 1, 1]}>

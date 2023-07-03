@@ -16,7 +16,7 @@ const GameProvider = ({ children }) => {
   const [gameStarted, setGameStarted] = useState(false);
 
   const [setup, setSetup] = useState({
-    mouse: false,
+    mouse: true,
     invertLook: false,
     graphics: 1,
     sound: true,
@@ -24,8 +24,8 @@ const GameProvider = ({ children }) => {
 
   const [reset, setReset] = useState(false);
   const [playerAlive, setPlayerAlive] = useState(true);
-
-  const [status, setStatus] = useState("");
+  //change status to done to work on the actual game
+  const [status, setStatus] = useState("done");
 
   const [particles, setParticles] = useState([]);
 

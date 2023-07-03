@@ -200,8 +200,8 @@ export const Web = () => {
           <p ref={subtext}>The Empire strikes. Yavin needs a Hero.</p>
           <h1 ref={h1}>
             <span ref={layer} className="layer">
-              <span ref={one}>Galaxy's</span> <span ref={two}>fate</span>{" "}
-              <span ref={three}>lies</span> <span ref={four}>in</span>{" "}
+              <span ref={one}>Galaxy's</span> <span ref={two}>fate</span>
+              <span ref={three}>lies</span> <span ref={four}>in</span>
               <span ref={five}>your</span> <span ref={six}>hands.</span>
             </span>
           </h1>

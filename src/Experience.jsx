@@ -38,7 +38,7 @@ export const Experience = () => {
   const { gameStarted, setGameStarted, setup, particles } = useContext(GameContext);
   return (
     <>
-      <directionalLight position-y={100} intensity={0.1} />
+      <directionalLight position-y={100} intensity={0.3} />
       {/* <ambientLight intensity={0.5} /> */}
       <fog attach="fog" args={["#1b2e43",80, 100]} color={[0.0015,0.0015,0.0025]}/>
       <Stars

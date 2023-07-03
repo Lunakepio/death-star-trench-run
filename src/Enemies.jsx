@@ -1,12 +1,13 @@
 import { CapsuleCollider, RigidBody } from "@react-three/rapier";
 import { Tie } from "./Tie";
 import { Box, PositionalAudio,  } from "@react-three/drei";
-import { Projectile } from "./Projectile";
+import { Projectile } from "./EnemyProjectile";
 import { useRef, useState, useEffect, useContext } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { gsap } from "gsap";
 import { GameContext } from "./main";
+import Explosion from "./Explode";
 
 function handleMouse(ref, ringOne, ringTwo, shotsFired, setProjectiles, light) {
   const projectilePosition = ref.position.clone();
@@ -29,7 +30,6 @@ function handleMouse(ref, ringOne, ringTwo, shotsFired, setProjectiles, light) {
       position: projectilePosition,
       rotation: projectileRotation,
       forwardVector: forwardVector,
-      enemy: true,
     },
   ]);
 }
@@ -88,15 +88,15 @@ export const Enemies = () => {
   const [bodyPosition, setBodyPosition] = useState([0, 100, 100]);
   const [bodyRotation, setBodyRotation] = useState([0, 0, 0]);
   const body = useRef();
-  const alive = useRef(true);
+  const [alive, setAlive] = useState(true);
   const xOffset = Math.random() * 20 - 10;
   const sound = useRef();
   const shouldPlay = useRef(true);
 
-  const { setup } = useContext(GameContext);
+  const { setup, setParticles } = useContext(GameContext);
   useFrame(({ clock, camera }) => {
 
-    if (alive.current) {
+    if (alive) {
       const currentTime = clock.getElapsedTime();
       const wingPosition = camera.position.clone();
       wingPosition.z = wingPosition.z + 7;
@@ -191,11 +191,11 @@ export const Enemies = () => {
             // if (e.colliderObject.name == "floor") {
             //   health.current -= 100;
             // }
-            if(e.colliderObject.name === "projectile") {
+            if(e.colliderObject.name === "playerProjectile") {
               health.current -= 25;
             }
             if (health.current <= 0) {
-              alive.current = false;
+              setAlive(false);
             }
           }}
         >
@@ -206,6 +206,7 @@ export const Enemies = () => {
         </RigidBody>
         <group ref={ref} position={[0, 100, 100]}>
           <Tie scale={0.12} />
+          {!alive && <Explosion scale={0.3} />}
           <PositionalAudio 
             url="/sounds/ennemyDown.wav"
             distance={100}
@@ -261,7 +262,7 @@ export const Enemies = () => {
           position={projectile.position}
           rotation={projectile.rotation}
           forwardVector={projectile.forwardVector}
-          enemy={true}
+          setParticles={setParticles}
           key={index}
         />
       ))}

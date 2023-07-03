@@ -34,7 +34,7 @@ function App() {
   return (
     <div className="" style={{ width: "100vw", height: "100vh" }}>
       {status !== "done" ? <Landing /> : <Game />}
-      <LoadingScreen />
+      {/* <LoadingScreen /> */}
     </div>
   );
 }
@@ -62,12 +62,12 @@ function Game(){
   >
     <color attach="background" args={[0.0015, 0.0015, 0.0025]} />
     <Suspense fallback={LoadingScreen}>
-      <Physics gravity={[0, 0, 0]}>
+      <Physics debug gravity={[0, 0, 0]}>
         <KeyboardControls map={map}>
           <Experience />
         </KeyboardControls>
       </Physics>
-      <Preload all />
+      {/* <Preload all /> */}
 
     </Suspense>
   </Canvas>
