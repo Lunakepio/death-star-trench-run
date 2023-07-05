@@ -106,9 +106,6 @@ const GameProvider = ({ children }) => {
         <div className="hud">
           {playerAlive ? (
             <>
-              <div className="timer">
-                <TimerComponent />
-              </div>
               <div className="health">
                 <p ref={healthCount}>{health}</p>
                 <HealthBar />

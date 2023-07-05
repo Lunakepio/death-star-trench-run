@@ -38,32 +38,26 @@ export const Experience = () => {
   const { gameStarted, setGameStarted, setup, particles } = useContext(GameContext);
   return (
     <>
-      <directionalLight position-y={100} intensity={0.3} />
+      <directionalLight position-y={100} intensity={0.4} />
       {/* <ambientLight intensity={0.5} /> */}
       <fog attach="fog" args={["#1b2e43",80, 100]} color={[0.0015,0.0015,0.0025]}/>
-      <Stars
+      {/* <Stars
         radius={1000}
         depth={50}
         count={30000}
         factor={20}
         saturation={0}
         fade
-      />
+      /> */}
       <group position={[0,60,-20]}>
       {/* <Opening /> */}
       </group>
       {/* <Enemies /> */}
-      {particles.map((particle, index) => ( // Render HitParticles on each hit.
-          <Particles key={index} position={particle.position} scale={0.3}  />
-        ))}
-        <World setup={setup}/>
-      <Player setup={setup} /> 
-      {/* <OrbitControls /> */}
-      {/* <SoftShadows /> */}
-      {/* <OrbitControls/> */}
+        <World/>
+      <Player/> 
       <Environment preset="night"  />
 
-      <Composer setup={setup} />
+      <Composer />
     </>
   );
 };
@@ -85,7 +79,7 @@ function World() {
           <meshBasicMaterial color="red" visible={visible} />
         </mesh>
       </RigidBody>
-      <RigidBody type="fixed" name="floor" position={[-4.2, -2.5, position]}>
+      <RigidBody type="fixed" name="floor" position={[-4.3, -2.5, position]}>
         <mesh>
           <boxGeometry args={[1, 10, 4000]} />
           <meshBasicMaterial color="green" visible={visible} />
@@ -104,38 +98,6 @@ export const Composer = () => {
   const { gameStarted, setGameStarted, setup } = useContext(GameContext);
 
   const texture = useLoader(LUTCubeLoader, "/F-6800-STD.cube");
-  const all = {
-    enabled: true,
-    temporalResolve: true,
-    STRETCH_MISSED_RAYS: true,
-    USE_MRT: true,
-    USE_NORMALMAP: true,
-    USE_ROUGHNESSMAP: true,
-    ENABLE_JITTERING: true,
-    ENABLE_BLUR: true,
-    DITHERING: false,
-    temporalResolveMix: 0.9,
-    temporalResolveCorrectionMix: 0.4,
-    maxSamples: 0,
-    resolutionScale: 1,
-    blurMix: 0.2,
-    blurKernelSize: 8,
-    BLUR_EXPONENT: 10,
-    rayStep: 0.5,
-    intensity: 2.5,
-    maxRoughness: 1,
-    jitter: 0.13,
-    jitterSpread: 0.25,
-    jitterRough: 0.01,
-    roughnessFadeOut: 1,
-    rayFadeOut: 0,
-    MAX_STEPS: 30,
-    NUM_BINARY_SEARCH_STEPS: 6,
-    maxDepthDifference: 5,
-    maxDepth: 1,
-    thickness: 3,
-    ior: 1.45
-  };
 
   const graphics = setup.graphics;
 

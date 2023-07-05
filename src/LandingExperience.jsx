@@ -148,7 +148,7 @@ export const LandingExperience = () => {
     {setup.sound ? <PositionalAudio ref={R2} url="/sounds/R2TAKEOFF.mp3" distance={10} loop={false} /> : null}
 
     {/* <ContactShadows  width={10} height={10} blur={1} far={4} /> */}
-    <PerspectiveCamera fov={35} ref={cam} near={0.1} far={1000}  makeDefault position={[10, -3.5, 20]} />
+    <PerspectiveCamera fov={50} ref={cam} near={0.1} far={1000}  makeDefault position={[10, -3.5, 20]} />
     <pointLight castShadow intensity={0.5} shadow-mapSize={1024} distance={5} ref={lightRef}/>
 
     </group>

@@ -35,11 +35,11 @@ export function Xwing({ wingsOpen }) {
     width: 0.2,
     color: "#7D7D7D",
     transparent: true,
-    length: 1,
-    decay: 0,
+    length: 1.2,
+    decay: 1,
     local: false,
     stride: 0,
-    interval: 2,
+    interval:1,
     target: undefined,
     attenuation: (width) => width,
     fade: (width) => width,
@@ -51,7 +51,12 @@ export function Xwing({ wingsOpen }) {
   function openWings() {
     gsap.to(refOne.current.rotation, { y: -0.22, duration: 1 });
     gsap.to(refTwo.current.rotation, { y: 0.22, duration: 1 });
-    gsap.set(trailValues.current, { decay: 0, delay: 0 });
+    if(trailOne.current) {
+      gsap.set(trailOne.current.position, { y: 0.3});
+      gsap.set(trailTwo.current.position, { y: -0.3});
+      gsap.set(trailThree.current.position, { y: -0.3});
+      gsap.set(trailFour.current.position, { y: 0.3});
+    }
     wingsOpenSound.current.setVolume(0.3);
     setup.sound && wingsOpenSound.current.play();
     gsap.to(materials.Light, { emissiveIntensity: 8, duration: 2 });
@@ -60,7 +65,10 @@ export function Xwing({ wingsOpen }) {
   function closeWings() {
     gsap.to(refOne.current.rotation, { y: 0, duration: 1 });
     gsap.to(refTwo.current.rotation, { y: 0, duration: 1 });
-    gsap.set(trailValues.current, { decay: 1, delay: 1 });
+    gsap.to(trailOne.current.position, { y: 0.1, duration: 1 });
+    gsap.to(trailTwo.current.position, { y: -0.1, duration: 1 });
+    gsap.to(trailThree.current.position, { y: -0.1, duration: 1 });
+    gsap.to(trailFour.current.position, { y: 0.1, duration: 1 });
     gsap.to(materials.Light, { emissiveIntensity: 12, duration: 2 });
     wingsCloseSound.current.setVolume(0.3);
     setup.sound && wingsCloseSound.current.play();
@@ -73,28 +81,28 @@ export function Xwing({ wingsOpen }) {
     if (gameStarted) {
       setup.sound && engine.current.play();
     }
-    if (wingsOpen.current) {
+    if (wingsOpen) {
       openWings();
     } else {
       closeWings();
     }
-  }, [wingsOpen.current, materials]);
+  }, [wingsOpen, materials]);
 
   return (
     <>
-      {!wingsOpen.current ? (
+      {!wingsOpen ? (
         <group>
           <Trail {...trailValues.current}>
-            <mesh ref={trailOne} position={[1.1, 0.01, -0.2]} />
+            <mesh ref={trailOne} position={[1.07, 0.3, -0.2]} />
           </Trail>
           <Trail {...trailValues.current}>
-            <mesh ref={trailTwo} position={[-1.1, -0.01, -0.2]} />
+            <mesh ref={trailTwo} position={[-1.07, -0.3, -0.2]} />
           </Trail>
           <Trail {...trailValues.current}>
-            <mesh ref={trailThree} position={[1.1, -0.01, -0.2]} />
+            <mesh ref={trailThree} position={[1.07, -0.3, -0.2]} />
           </Trail>
           <Trail {...trailValues.current}>
-            <mesh ref={trailFour} position={[-1.1, 0.01, -0.2]} />
+            <mesh ref={trailFour} position={[-1.07, 0.3, -0.2]} />
           </Trail>
         </group>
       ) : null}

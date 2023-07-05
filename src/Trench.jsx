@@ -89,6 +89,26 @@ function animateShoot(ref, light) {
   });
 }
 
+const Projectiles = React.memo(
+  ({ projectiles }) => {
+    return (
+      <>
+        {projectiles.map((projectile, index) => (
+          <Projectile
+            position={projectile.position}
+            rotation={projectile.rotation}
+            forwardVector={projectile.forwardVector}
+            key={index}
+          />
+        ))}
+      </>
+    );
+  },
+  (prevProps, nextProps) => {
+    return prevProps.projectiles === nextProps.projectiles;
+  }
+);
+
 export function TrenchTurret(props) {
   const group = useRef();
   const { nodes, materials } = useGLTF("/trench-transformed.glb");
@@ -148,7 +168,6 @@ export function TrenchTurret(props) {
             </group>
           ))}
       </group>
-      <Enemies />
       <Obstacle position={[0, 1, 100]} />
       <Obstacle position={[0, -2, 120]} />
       <Obstacle position={[0, 1, 140]} />
@@ -186,8 +205,22 @@ export function TrenchTurret(props) {
       <Obstacle position={[0, -2.5, 710]} />
       <Obstacle position={[0, 2, 730]} />
       <Obstacle position={[0, -2.5, 750]} />
-      <Obstacle position={[0, 2, 770]} />
+      <Obstacle position={[0, 2, 760]} />
 
+      <Obstacle position={[0, 2, 770]} />
+      <Obstacle position={[0, 0, 780]} />
+      <Obstacle position={[0, -2, 800]} />
+      <Obstacle position={[0, 1, 820]} />
+      <Obstacle position={[0, 2, 840]} />
+      <Obstacle position={[0, 0, 860]} />
+      <Obstacle position={[-3, -2, 880]} rotation={[0, 0, Math.PI / 2]}/>
+      <Obstacle position={[3, -2, 880]} rotation={[0, 0, Math.PI / 2]}/>
+      <Obstacle position={[-3, -2, 900]} rotation={[0, 0, Math.PI / 2]}/>
+      <Obstacle position={[3, -2, 900]} rotation={[0, 0, Math.PI / 2]}/>
+      <Obstacle position={[0, -2.5, 920]} />
+      <Obstacle position={[0, 2.5, 920]}/>
+      <Obstacle position={[0, -2.5, 940]} />
+      <Obstacle position={[0, 2.5, 940]}/>
 
 
       {/* <Turret position={[1, -18.3, 100]} materials={materials} nodes={nodes} />
@@ -396,15 +429,8 @@ function Turret({ position, materials, nodes }) {
           </mesh>
         </group>
       </group>
-      {projectiles.map((projectile, index) => (
-        <Projectile
-          position={projectile.position}
-          rotation={projectile.rotation}
-          forwardVector={projectile.forwardVector}
-          setParticles={setParticles}
-          key={index}
-        />
-      ))}
+           <Projectiles projectiles={projectiles} />
+
     </>
   );
 }

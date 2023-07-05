@@ -1,4 +1,5 @@
 import { Suspense, useMemo, useState, useContext } from "react";
+import { Perf } from "r3f-perf";
 
 import { Canvas } from "@react-three/fiber";
 import { Experience } from "./Experience";
@@ -8,6 +9,7 @@ import {
   Loader,
   OrbitControls,
   Preload,
+  Stats,
 } from "@react-three/drei";
 import { Web } from "./Web";
 import "./globals.scss";
@@ -23,13 +25,12 @@ export const Controls = {
   boost: "boost",
   shoot: "shoot",
   slow: "slow",
-  reset : "reset",
+  reset: "reset",
 };
 
 function App() {
   const [count, setCount] = useState(0);
-  const {status, setStatus} = useContext(GameContext);
-
+  const { status, setStatus } = useContext(GameContext);
 
   return (
     <div className="" style={{ width: "100vw", height: "100vh" }}>
@@ -39,7 +40,7 @@ function App() {
   );
 }
 
-function Game(){
+function Game() {
   const map = useMemo(
     () => [
       { name: Controls.up, keys: ["KeyW", "ArrowUp"] },
@@ -54,24 +55,23 @@ function Game(){
     []
   );
   return (
-    
     <Canvas
-        dpr={[1, 1]}
-        gl={{ antialias: false, stencil: false,depth: false }}
-        style={{ cursor: "none"}}
-  >
-    <color attach="background" args={[0.0015, 0.0015, 0.0025]} />
-    <Suspense fallback={LoadingScreen}>
-      <Physics debug gravity={[0, 0, 0]}>
-        <KeyboardControls map={map}>
-          <Experience />
-        </KeyboardControls>
-      </Physics>
-      {/* <Preload all /> */}
-
-    </Suspense>
-  </Canvas>
-  )
+      dpr={[1,1]}
+      gl={{ antialias: false, stencil: false, depth: false }}
+      style={{ cursor: "none" }}
+    >
+      <color attach="background" args={[0.0015, 0.0015, 0.0025]} />
+      <Suspense fallback={LoadingScreen}>
+        <Physics gravity={[0, 0, 0]}>
+          <KeyboardControls map={map}>
+            <Experience />
+          </KeyboardControls>
+        </Physics>
+        <Preload all />
+        <Perf />
+      </Suspense>
+    </Canvas>
+  );
 }
 
 export default App;
