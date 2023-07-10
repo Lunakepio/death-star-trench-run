@@ -41,6 +41,12 @@ export const Projectile = ({ position, rotation, forwardVector }) => {
               emissiveIntensity={4}
               toneMapped={false}
             />
+            <PositionalAudio
+              url="/sounds/tieBlaster.wav"
+              distance={10}
+              loop={false}
+              autoplay={true}
+              />
           </mesh>
         </RigidBody>
       )}

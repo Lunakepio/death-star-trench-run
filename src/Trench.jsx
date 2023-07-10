@@ -13,6 +13,7 @@ import { RigidBody } from "@react-three/rapier";
 import gsap from "gsap";
 import { GameContext } from "./main";
 import { Enemies } from "./Enemies";
+import { TieFront } from "./TIEfront";
 
 function handleMouse(
   pos,
@@ -130,7 +131,29 @@ export function TrenchTurret(props) {
     }
   });
 
-  function Obstacle({ position, rotation }) {
+  function Obstacle({ position, rotation, type }) {
+    const ref = useRef();
+    const shouldMove = useRef(false);
+   
+    if(type){
+      useFrame(({ camera, clock }) => {
+        if (position[2] - camera.position.z < -10) {
+          shouldMove.current = false;
+        }
+        if (position[2] - camera.position.z < 50) {
+         shouldMove.current = true;
+        }
+  
+        if(shouldMove.current){
+          const time = clock.getElapsedTime();
+          ref.current.setTranslation({
+            x: 0,
+            y: Math.sin(time * 2) * 2,
+            z: position[2],
+          });
+        }
+      });
+    }
     return (
       <RigidBody
         position={position}
@@ -138,6 +161,7 @@ export function TrenchTurret(props) {
         type="fixed"
         name="floor"
         restitution={0}
+        ref={ref}
       >
         <mesh material={materials.Hullplates2}>
           <boxGeometry args={[10, 3, 1]} />
@@ -198,9 +222,14 @@ export function TrenchTurret(props) {
       <Turret position={[-3, -18.3, 545]} materials={materials} nodes={nodes} />
       <Turret position={[0, -18.3, 540]} materials={materials} nodes={nodes} />
       <Turret position={[3, -18.3, 545]} materials={materials} nodes={nodes} />
+      <TieFront position={[0, 0, 610]} />
 
       <Obstacle position={[0, -3, 590]} />
-      <Turret position={[-2.5, -18.3, 645]} materials={materials} nodes={nodes} />
+      <Turret
+        position={[-2.5, -18.3, 645]}
+        materials={materials}
+        nodes={nodes}
+      />
       <Obstacle position={[0, 2, 690]} />
       <Obstacle position={[0, -2.5, 710]} />
       <Obstacle position={[0, 2, 730]} />
@@ -213,15 +242,40 @@ export function TrenchTurret(props) {
       <Obstacle position={[0, 1, 820]} />
       <Obstacle position={[0, 2, 840]} />
       <Obstacle position={[0, 0, 860]} />
-      <Obstacle position={[-3, -2, 880]} rotation={[0, 0, Math.PI / 2]}/>
-      <Obstacle position={[3, -2, 880]} rotation={[0, 0, Math.PI / 2]}/>
-      <Obstacle position={[-3, -2, 900]} rotation={[0, 0, Math.PI / 2]}/>
-      <Obstacle position={[3, -2, 900]} rotation={[0, 0, Math.PI / 2]}/>
+      <Obstacle position={[-3, -2, 880]} rotation={[0, 0, Math.PI / 2]} />
+      <Obstacle position={[3, -2, 880]} rotation={[0, 0, Math.PI / 2]} />
+      <Obstacle position={[-3, -2, 900]} rotation={[0, 0, Math.PI / 2]} />
+      <Obstacle position={[3, -2, 900]} rotation={[0, 0, Math.PI / 2]} />
       <Obstacle position={[0, -2.5, 920]} />
-      <Obstacle position={[0, 2.5, 920]}/>
-      <Obstacle position={[0, -2.5, 940]} />
-      <Obstacle position={[0, 2.5, 940]}/>
-
+      <Obstacle position={[0, 2.5, 920]} />
+      <Obstacle position={[0, -2.6, 940]} />
+      <Obstacle position={[0, 2.6, 940]} />
+      <Obstacle position={[0, -4.1, 950]} />
+      <Obstacle position={[0, 1.1, 950]} />
+      <Obstacle position={[0, -2.1, 960]} />
+      <Obstacle position={[0, 3.6, 960]} />
+      <Obstacle position={[0, -2.6, 970]} />
+      <Obstacle position={[0, 2.6, 970]} />
+      <TieFront position={[-2, -2, 1060]} />
+      <TieFront position={[2, 1, 1100]} />
+      <TieFront position={[3, -1, 1140]} />
+      <TieFront position={[0, 0, 1200]} />
+      <TieFront position={[2, 0, 1250]} />
+      <TieFront position={[-2, 0, 1250]} />
+      <Turret position={[0, -18.3, 1300]} materials={materials} nodes={nodes} />
+      <Turret
+        position={[-2, -18.3, 1400]}
+        materials={materials}
+        nodes={nodes}
+      />
+      <Turret position={[2, -18.3, 1400]} materials={materials} nodes={nodes} />
+      <TieFront position={[0, 0, 1400]} />
+      <Obstacle position={[0, 0, 1450]} />
+      <Obstacle position={[0, 2, 1470]} />
+      <Obstacle position={[0, 0, 1490]} />
+      <Obstacle position={[0, 2, 1510]} />
+      {/* <Obstacle position={[0, 0, 1530]} type={true}/> */}
+      <Obstacle position={[0, 0, 50]} type={true} />
 
       {/* <Turret position={[1, -18.3, 100]} materials={materials} nodes={nodes} />
       <Turret position={[-2, -18.3, 110]} materials={materials} nodes={nodes} />
@@ -351,8 +405,6 @@ function Turret({ position, materials, nodes }) {
             }
             if (health.current <= 0) {
               setAlive(false);
-              setParticles([]);
-              setProjectiles([]);
               health.current = 100;
             }
           }}
@@ -429,8 +481,7 @@ function Turret({ position, materials, nodes }) {
           </mesh>
         </group>
       </group>
-           <Projectiles projectiles={projectiles} />
-
+      <Projectiles projectiles={projectiles} />
     </>
   );
 }

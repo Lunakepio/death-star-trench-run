@@ -68,7 +68,7 @@ function Game() {
           </KeyboardControls>
         </Physics>
         <Preload all />
-        <Perf />
+        {/* <Perf /> */}
       </Suspense>
     </Canvas>
   );

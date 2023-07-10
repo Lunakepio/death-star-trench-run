@@ -77,7 +77,7 @@ const GameProvider = ({ children }) => {
       }
       const width = `${health}%`;
       healthBar.style.width = width;
-    }, [playerHealth.current]);
+    }, [playerHealth.current, health]);
 
     return <div className="healthBar" ref={healthBarRef}></div>;
   }

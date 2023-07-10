@@ -242,6 +242,7 @@ export const Player = () => {
     const currentTime = clock.getElapsedTime();
     if (gameStarted) {
       if (playerAlive) {
+        console.log(cam.position.z)
         setWingsOpen(true);
         if (speed.current > 0.3) {
           speed.current -= 0.001;
@@ -255,25 +256,23 @@ export const Player = () => {
             speed.current += 0.001;
           }
         }
-        if(slowPressed && !boostPressed){
-          if(speed.current > 0.1){
+        if (slowPressed && !boostPressed) {
+          if (speed.current > 0.1) {
             speed.current -= 0.001;
           }
         }
         let targetFov = boostPressed ? 90 : 50;
-        if(slowPressed && !boostPressed){
+        if (slowPressed && !boostPressed) {
           targetFov = 30;
         }
         cam.fov = lerp(cam.fov, targetFov, 0.01);
         cam.updateProjectionMatrix();
-        if (frameCount.current % 10 === 0) {
-          body.current.setTranslation({
-            x: ref.current.position.x,
-            y: ref.current.position.y,
-            z: ref.current.position.z,
-          });
-          body.current.setRotation(quaternion.setFromEuler(euler.set(0, 0, 0)));
-        }
+        body.current.setTranslation({
+          x: ref.current.position.x,
+          y: ref.current.position.y,
+          z: ref.current.position.z,
+        });
+        body.current.setRotation(quaternion.setFromEuler(euler.set(0, 0, 0)));
         boxRef.current.rotation.set(0, 0, 0);
         if (setup.mouse) {
           boxRef.current.position.x = -mouse.x * 8;
@@ -328,8 +327,11 @@ export const Player = () => {
         }
         if (
           (mousePressed.current &&
-            currentTime - lastShotTime.current > attackSpeed) && wingsOpen ||
-          (shootPressed && currentTime - lastShotTime.current > attackSpeed && wingsOpen)
+            currentTime - lastShotTime.current > attackSpeed &&
+            wingsOpen) ||
+          (shootPressed &&
+            currentTime - lastShotTime.current > attackSpeed &&
+            wingsOpen)
         ) {
           handleMouse(
             ref.current,
@@ -398,14 +400,16 @@ export const Player = () => {
     // }, 110000);
   }, []);
 
-  function handleCollision(name) {
-    if (name === "floor") {
-      playerHealth.current -= 100;
-    }
+  const handleCollision = (name) => {
     if (name === "enemyProjectile") {
       playerHealth.current -= 5;
     }
-  }
+    if (name === "floor") {
+      playerHealth.current -= 100;
+    }
+  };
+
+
   return (
     <>
       <group>
@@ -420,17 +424,11 @@ export const Player = () => {
           ref={body}
           type="Dynamic"
           onCollisionEnter={(e) => {
-            if (
-              e.colliderObject.name === "floor" ||
-              e.colliderObject.name === "enemyProjectile"
-            ) {
-              playerHealth.current -=
-                e.colliderObject.name === "floor" ? 100 : 5;
-            }
+            handleCollision(e.rigidBodyObject.name);
           }}
         >
           <mesh>
-            <boxGeometry args={[1.5, 0.6, 0.3]} />
+            <boxGeometry args={[1.7, 0.6, 0.5]} />
             <meshBasicMaterial color="red" visible={false} />
           </mesh>
         </RigidBody>
