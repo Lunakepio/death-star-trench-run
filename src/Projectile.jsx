@@ -49,7 +49,7 @@ export const Projectile = ({ position, rotation, forwardVector, enemy, setPartic
           name={!enemy ? "playerProjectile" : "enemyProjectile"}
           restitution={0}
           onCollisionEnter={({ manifold }) => {
-            handleCollision(manifold.solverContactPoint(0))
+  
           }}
         >
           <mesh ref={meshRef} raycast={(e) => {

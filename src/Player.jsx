@@ -167,7 +167,7 @@ export const Player = () => {
   const play = useRef(false);
   const boxSpeed = 0.15;
 
-  const attackSpeed = 0.12;
+  const attackSpeed = 0.01;
 
   useFrame(({ mouse, clock, viewport }) => {
     const cam = camera.current;
